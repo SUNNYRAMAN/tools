@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF organizer tool. Merge, split, reorder, and organize your PDF documents with ease.">
+    <meta name="keywords" content="PDF organizer, merge PDF, split PDF, organize PDF, PDF tools">
+    <title>PDF Organizer Pro - Organize Your PDF Documents Online</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4cb5ae;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .ad-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            border: 1px dashed #ccc;
+        }
+        
+        .ad-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        h1 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .upload-section {
+            border: 2px dashed #adb5bd;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            background-color: #f8fafc;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #3a9c96;
+        }
+        
+        .tools-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .tool-card {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+        
+        .tool-card.active {
+            border-color: var(--accent-color);
+            background: #e8f4f3;
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .settings-panel {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkbox-group input {
+            margin-right: 0.5rem;
+        }
+        
+        .file-list {
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .file-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+            color: #6c757d;
+            transition: color 0.3s;
+        }
+        
+        .file-actions button:hover {
+            color: var(--danger-color);
+        }
+        
+        .preview-container {
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            min-height: 400px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #pdf-preview {
+            max-width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .page-thumbnail {
+            width: 100px;
+            height: 130px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .page-thumbnail.active {
+            border-color: var(--accent-color);
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 2px;
+            font-size: 0.8rem;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .ad-container {
+                min-height: 150px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .tools-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .actions .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            color: white;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: var(--success-color);
+        }
+        
+        .notification.error {
+            background: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i>📑</i> PDF Organizer Pro
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Organize Your PDF Documents</h1>
+            <p>Upload your PDF files and organize them with our powerful tools. Merge, split, reorder, and optimize your PDFs with ease.</p>
+            
+            <div class="upload-section" id="upload-area">
+                <div class="upload-icon">📤</div>
+                <h2>Upload PDF Files</h2>
+                <p>Drag & drop your PDFs here or click to browse</p>
+                <input type="file" id="pdf-upload" accept=".pdf" multiple style="display: none;">
+                <button class="btn" id="upload-btn">Select PDF Files</button>
+                <p class="ad-label">Supports multiple files for merging</p>
+            </div>
+            
+            <div id="pdf-interface" class="hidden">
+                <div class="file-list" id="file-list">
+                    <!-- File items will be added here dynamically -->
+                </div>
+                
+                <div class="tools-panel">
+                    <div class="tool-card active" id="tool-merge">
+                        <div class="tool-icon">🔗</div>
+                        <h3>Merge PDFs</h3>
+                        <p>Combine multiple PDFs into one document</p>
+                    </div>
+                    <div class="tool-card" id="tool-split">
+                        <div class="tool-icon">✂️</div>
+                        <h3>Split PDF</h3>
+                        <p>Extract pages or split by page ranges</p>
+                    </div>
+                    <div class="tool-card" id="tool-reorder">
+                        <div class="tool-icon">↕️</div>
+                        <h3>Reorder Pages</h3>
+                        <p>Rearrange pages in your PDF</p>
+                    </div>
+                    <div class="tool-card" id="tool-rotate">
+                        <div class="tool-icon">🔄</div>
+                        <h3>Rotate Pages</h3>
+                        <p>Rotate specific pages or entire document</p>
+                    </div>
+                </div>
+                
+                <div class="settings-panel" id="merge-settings">
+                    <h2>Merge Settings</h2>
+                    
+                    <div class="form-group">
+                        <label for="merge-order">Merge Order</label>
+                        <select id="merge-order">
+                            <option value="upload">By upload order</option>
+                            <option value="alphabetical">Alphabetically by filename</option>
+                            <option value="custom">Custom order (drag to reorder)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="output-filename">Output Filename</label>
+                        <input type="text" id="output-filename" placeholder="Enter filename for merged PDF">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Options</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="remove-blanks" checked>
+                            <label for="remove-blanks">Remove blank pages</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="optimize-size">
+                            <label for="optimize-size">Optimize file size</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-panel hidden" id="split-settings">
+                    <h2>Split Settings</h2>
+                    
+                    <div class="form-group">
+                        <label for="split-method">Split Method</label>
+                        <select id="split-method">
+                            <option value="range">By page ranges (e.g., 1-3, 5-8)</option>
+                            <option value="single">Extract single pages</option>
+                            <option value="every">Split after every page</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="page-ranges">Page Ranges</label>
+                        <input type="text" id="page-ranges" placeholder="e.g., 1-3, 5-8, 10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="split-filename">Output Filename Pattern</label>
+                        <input type="text" id="split-filename" placeholder="e.g., document_{page}.pdf">
+                    </div>
+                </div>
+                
+                <div class="settings-panel hidden" id="reorder-settings">
+                    <h2>Reorder Pages</h2>
+                    
+                    <div class="form-group">
+                        <p>Drag and drop pages to reorder them</p>
+                        <div class="page-thumbnails" id="page-thumbnails">
+                            <!-- Page thumbnails will be added here -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reorder-filename">Output Filename</label>
+                        <input type="text" id="reorder-filename" placeholder="Enter filename for reordered PDF">
+                    </div>
+                </div>
+                
+                <div class="settings-panel hidden" id="rotate-settings">
+                    <h2>Rotate Pages</h2>
+                    
+                    <div class="form-group">
+                        <label for="rotate-pages">Pages to Rotate</label>
+                        <input type="text" id="rotate-pages" placeholder="e.g., 1-3, 5 or leave blank for all">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rotate-angle">Rotation Angle</label>
+                        <select id="rotate-angle">
+                            <option value="90">90° Clockwise</option>
+                            <option value="180">180°</option>
+                            <option value="270">90° Counterclockwise</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rotate-filename">Output Filename</label>
+                        <input type="text" id="rotate-filename" placeholder="Enter filename for rotated PDF">
+                    </div>
+                </div>
+                
+                <div class="preview-container">
+                    <canvas id="pdf-preview"></canvas>
+                    <div id="pdf-loading" class="spinner hidden"></div>
+                    <div id="no-preview" class="hidden">
+                        <p>Preview will appear here after processing</p>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn btn-success" id="process-pdf">Process PDF</button>
+                    <button class="btn btn-accent" id="download-pdf">Download Result</button>
+                    <button class="btn btn-secondary" id="reset-tool">Reset</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <div id="ad-unit-1">
+                    <p>Advertisement</p>
+                    <div style="width: 300px; height: 250px; background: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+                        <p>AdSense Ad Unit (300x250)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <div id="ad-unit-2">
+                    <p>Advertisement</p>
+                    <div style="width: 300px; height: 600px; background: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+                        <p>AdSense Ad Unit (300x600)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>PDF Organizer Pro</h3>
+                <p>Powerful online PDF organization tools. Merge, split, reorder, and rotate your PDF documents with our easy-to-use interface.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>PDF Tools</h3>
+                <ul>
+                    <li><a href="#merge">Merge PDF</a></li>
+                    <li><a href="#split">Split PDF</a></li>
+                    <li><a href="#reorder">Reorder PDF</a></li>
+                    <li><a href="#rotate">Rotate PDF</a></li>
+                    <li><a href="#compress">Compress PDF</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: support@pdforganizerpro.com</li>
+                    <li>Phone: +1 (555) 987-6543</li>
+                    <li>Address: 456 Document Ave, File City</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 PDF Organizer Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // DOM Elements
+        const pdfUpload = document.getElementById('pdf-upload');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadArea = document.getElementById('upload-area');
+        const pdfInterface = document.getElementById('pdf-interface');
+        const fileList = document.getElementById('file-list');
+        const pdfPreview = document.getElementById('pdf-preview');
+        const pdfLoading = document.getElementById('pdf-loading');
+        const noPreview = document.getElementById('no-preview');
+        const progressBar = document.getElementById('progress-bar');
+        const notification = document.getElementById('notification');
+        
+        // Tool cards
+        const toolCards = document.querySelectorAll('.tool-card');
+        const settingsPanels = document.querySelectorAll('.settings-panel');
+        
+        // Action buttons
+        const processPdfBtn = document.getElementById('process-pdf');
+        const downloadPdfBtn = document.getElementById('download-pdf');
+        const resetToolBtn = document.getElementById('reset-tool');
+        
+        // Variables
+        let uploadedFiles = [];
+        let currentTool = 'merge';
+        let currentPdfDoc = null;
+        let currentPage = 1;
+        
+        // Initialize the application
+        function init() {
+            // Set up event listeners
+            uploadBtn.addEventListener('click', () => pdfUpload.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleFileDrop);
+            pdfUpload.addEventListener('change', handleFileSelect);
+            
+            // Tool selection
+            toolCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    toolCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    currentTool = card.id.replace('tool-', '');
+                    updateToolInterface();
+                });
+            });
+            
+            // Action buttons
+            processPdfBtn.addEventListener('click', processPdf);
+            downloadPdfBtn.addEventListener('click', downloadPdf);
+            resetToolBtn.addEventListener('click', resetTool);
+            
+            // Initialize with merge tool selected
+            updateToolInterface();
+        }
+        
+        // Handle file selection
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            processFiles(files);
+        }
+        
+        // Handle drag over
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            uploadArea.style.borderColor = 'var(--primary-color)';
+            uploadArea.style.backgroundColor = '#f8fafc';
+        }
+        
+        // Handle file drop
+        function handleFileDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            uploadArea.style.borderColor = '#adb5bd';
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            const files = Array.from(event.dataTransfer.files);
+            processFiles(files);
+        }
+        
+        // Process uploaded files
+        function processFiles(files) {
+            const pdfFiles = files.filter(file => file.type === 'application/pdf');
+            
+            if (pdfFiles.length === 0) {
+                showNotification('Please select PDF files only.', 'error');
+                return;
+            }
+            
+            // Add files to our list
+            pdfFiles.forEach(file => {
+                uploadedFiles.push({
+                    file: file,
+                    id: Date.now() + Math.random(),
+                    name: file.name,
+                    size: (file.size / 1024 / 1024).toFixed(2) + ' MB'
+                });
+            });
+            
+            updateFileList();
+            pdfInterface.classList.remove('hidden');
+            showNotification(`${pdfFiles.length} PDF file(s) uploaded successfully!`, 'success');
+            
+            // If only one file, load it for preview
+            if (uploadedFiles.length === 1) {
+                loadPdfForPreview(uploadedFiles[0].file);
+            }
+        }
+        
+        // Update the file list UI
+        function updateFileList() {
+            fileList.innerHTML = '';
+            
+            uploadedFiles.forEach((fileObj, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-icon">📄</div>
+                        <div>
+                            <div><strong>${fileObj.name}</strong></div>
+                            <div>${fileObj.size}</div>
+                        </div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="move-up" ${index === 0 ? 'disabled' : ''}>⬆️</button>
+                        <button class="move-down" ${index === uploadedFiles.length - 1 ? 'disabled' : ''}>⬇️</button>
+                        <button class="remove-file">❌</button>
+                    </div>
+                `;
+                
+                // Add event listeners for actions
+                const moveUpBtn = fileItem.querySelector('.move-up');
+                const moveDownBtn = fileItem.querySelector('.move-down');
+                const removeBtn = fileItem.querySelector('.remove-file');
+                
+                moveUpBtn.addEventListener('click', () => moveFile(index, 'up'));
+                moveDownBtn.addEventListener('click', () => moveFile(index, 'down'));
+                removeBtn.addEventListener('click', () => removeFile(fileObj.id));
+                
+                fileList.appendChild(fileItem);
+            });
+        }
+        
+        // Move file up or down in the list
+        function moveFile(index, direction) {
+            if (direction === 'up' && index > 0) {
+                [uploadedFiles[index], uploadedFiles[index - 1]] = [uploadedFiles[index - 1], uploadedFiles[index]];
+            } else if (direction === 'down' && index < uploadedFiles.length - 1) {
+                [uploadedFiles[index], uploadedFiles[index + 1]] = [uploadedFiles[index + 1], uploadedFiles[index]];
+            }
+            
+            updateFileList();
+        }
+        
+        // Remove file from the list
+        function removeFile(fileId) {
+            uploadedFiles = uploadedFiles.filter(file => file.id !== fileId);
+            updateFileList();
+            
+            if (uploadedFiles.length === 0) {
+                pdfInterface.classList.add('hidden');
+            }
+        }
+        
+        // Update tool interface based on selection
+        function updateToolInterface() {
+            // Hide all settings panels
+            settingsPanels.forEach(panel => panel.classList.add('hidden'));
+            
+            // Show the appropriate settings panel
+            document.getElementById(`${currentTool}-settings`).classList.remove('hidden');
+            
+            // Update button text
+            processPdfBtn.textContent = `${currentTool.charAt(0).toUpperCase() + currentTool.slice(1)} PDF`;
+            
+            // Update preview based on tool
+            updatePreview();
+        }
+        
+        // Load PDF for preview
+        function loadPdfForPreview(file) {
+            pdfLoading.classList.remove('hidden');
+            noPreview.classList.add('hidden');
+            
+            // In a real implementation, you would use a PDF library like pdf.js
+            // This is a simplified version for demonstration
+            
+            setTimeout(() => {
+                // Simulate PDF loading
+                pdfLoading.classList.add('hidden');
+                
+                // Display a placeholder for the PDF
+                const ctx = pdfPreview.getContext('2d');
+                pdfPreview.width = 600;
+                pdfPreview.height = 800;
+                
+                // Draw a placeholder PDF
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, pdfPreview.width, pdfPreview.height);
+                
+                ctx.fillStyle = '#34495e';
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('PDF Document Preview', pdfPreview.width / 2, pdfPreview.height / 2 - 50);
+                
+                ctx.font = '16px Arial';
+                ctx.fillText('Page 1 of 5', pdfPreview.width / 2, pdfPreview.height / 2);
+                
+                ctx.fillStyle = '#bdc3c7';
+                ctx.fillRect(50, 100, pdfPreview.width - 100, pdfPreview.height - 200);
+                
+                ctx.fillStyle = '#7f8c8d';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText('This is a placeholder for the PDF content.', 70, 120);
+                ctx.fillText('In a real implementation, the actual PDF would be displayed here.', 70, 140);
+                
+                // Generate page thumbnails for reorder tool
+                if (currentTool === 'reorder') {
+                    generatePageThumbnails();
+                }
+            }, 1500);
+        }
+        
+        // Generate page thumbnails for reordering
+        function generatePageThumbnails() {
+            const thumbnailsContainer = document.getElementById('page-thumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            // Create 5 placeholder thumbnails (simulating a 5-page document)
+            for (let i = 1; i <= 5; i++) {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'page-thumbnail';
+                thumbnail.innerHTML = `
+                    <div style="width:100%;height:100%;background:#e9ecef;display:flex;justify-content:center;align-items:center;">
+                        <span>Page ${i}</span>
+                    </div>
+                    <div class="page-number">${i}</div>
+                `;
+                
+                thumbnail.addEventListener('click', () => {
+                    document.querySelectorAll('.page-thumbnail').forEach(t => t.classList.remove('active'));
+                    thumbnail.classList.add('active');
+                    currentPage = i;
+                    updatePreview();
+                });
+                
+                thumbnailsContainer.appendChild(thumbnail);
+            }
+            
+            // Activate the first thumbnail
+            if (thumbnailsContainer.firstChild) {
+                thumbnailsContainer.firstChild.classList.add('active');
+            }
+        }
+        
+        // Update preview based on current tool and settings
+        function updatePreview() {
+            // In a real implementation, this would update the PDF preview
+            // based on the current tool and settings
+            
+            if (uploadedFiles.length === 0) {
+                noPreview.classList.remove('hidden');
+                pdfPreview.classList.add('hidden');
+            } else {
+                noPreview.classList.add('hidden');
+                pdfPreview.classList.remove('hidden');
+            }
+        }
+        
+        // Process PDF based on selected tool
+        function processPdf() {
+            if (uploadedFiles.length === 0) {
+                showNotification('Please upload at least one PDF file.', 'error');
+                return;
+            }
+            
+            // Validate tool-specific requirements
+            if (currentTool === 'split') {
+                const pageRanges = document.getElementById('page-ranges').value;
+                if (!pageRanges) {
+                    showNotification('Please specify page ranges to split.', 'error');
+                    return;
+                }
+            }
+            
+            // Simulate processing with progress bar
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    showNotification(`PDF ${currentTool} operation completed successfully!`, 'success');
+                    downloadPdfBtn.disabled = false;
+                }
+            }, 100);
+        }
+        
+        // Download processed PDF
+        function downloadPdf() {
+            showNotification('Preparing your PDF for download...', 'success');
+            
+            // In a real implementation, this would generate and download the PDF
+            setTimeout(() => {
+                showNotification('PDF download started!', 'success');
+                
+                // Simulate download
+                const link = document.createElement('a');
+                link.download = 'processed-document.pdf';
+                link.href = '#';
+                link.click();
+            }, 1000);
+        }
+        
+        // Reset the tool
+        function resetTool() {
+            if (confirm('Are you sure you want to reset? All uploaded files and changes will be lost.')) {
+                uploadedFiles = [];
+                pdfInterface.classList.add('hidden');
+                pdfUpload.value = '';
+                progressBar.style.width = '0%';
+                downloadPdfBtn.disabled = true;
+                
+                // Reset form fields
+                document.getElementById('output-filename').value = '';
+                document.getElementById('page-ranges').value = '';
+                document.getElementById('split-filename').value = '';
+                document.getElementById('reorder-filename').value = '';
+                document.getElementById('rotate-pages').value = '';
+                document.getElementById('rotate-filename').value = '';
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize the
