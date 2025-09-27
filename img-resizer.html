@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online image resizer tool. Resize your images to any dimensions while maintaining quality. Perfect for social media, websites, and more.">
+    <meta name="keywords" content="image resizer, photo resizer, resize image, image tool, online image editor">
+    <title>Image Resizer Tool - Resize Your Images Online for Free</title>
+    <style>
+        :root {
+            --primary-color: #4a6ee0;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2a4bc0);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .tool-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .upload-section, .settings-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 110, 224, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .preview-container {
+            display: none;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        #image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .image-info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input, select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 110, 224, 0.2);
+        }
+
+        .dimension-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .ratio-lock {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .ratio-lock input {
+            margin-right: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        #resize-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #resize-btn:hover {
+            background-color: #3a5bc7;
+        }
+
+        #download-btn {
+            background-color: var(--success-color);
+            color: white;
+            display: none;
+        }
+
+        #download-btn:hover {
+            background-color: #218838;
+        }
+
+        #reset-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .ad-container {
+            margin: 2rem 0;
+            text-align: center;
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Image Resizer Tool</h1>
+            <p>Resize your images online for free with our easy-to-use tool</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Ad Space - Top -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- Google AdSense Ad Unit -->
+            <div id="ad-unit-top">
+                <!-- AdSense code will be inserted here -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="tool-container">
+            <section class="upload-section">
+                <h2 class="section-title">Upload Image</h2>
+                <div class="upload-area" id="upload-area">
+                    <i>📁</i>
+                    <p>Click to upload or drag and drop an image</p>
+                    <p>Supported formats: JPG, PNG, GIF, WebP</p>
+                    <p>Max file size: 5MB</p>
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+                
+                <div class="preview-container" id="preview-container">
+                    <img id="image-preview" src="" alt="Image preview">
+                    <div class="image-info" id="image-info"></div>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing image...</p>
+                </div>
+            </section>
+            
+            <section class="settings-section">
+                <h2 class="section-title">Resize Settings</h2>
+                <div class="settings-options">
+                    <div class="setting-group">
+                        <label for="width">Width (px)</label>
+                        <input type="number" id="width" min="1" value="800">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="height">Height (px)</label>
+                        <input type="number" id="height" min="1" value="600">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="maintain-ratio">
+                            <input type="checkbox" id="maintain-ratio" checked> Maintain aspect ratio
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="quality">Quality</label>
+                        <select id="quality">
+                            <option value="1">High (100%)</option>
+                            <option value="0.9">Good (90%)</option>
+                            <option value="0.8" selected>Medium (80%)</option>
+                            <option value="0.7">Low (70%)</option>
+                            <option value="0.6">Very Low (60%)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="format">Output Format</label>
+                        <select id="format">
+                            <option value="original">Original Format</option>
+                            <option value="jpeg">JPEG</option>
+                            <option value="png">PNG</option>
+                            <option value="webp">WebP</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="resize-btn">Resize Image</button>
+                    <button id="download-btn" disabled>Download Image</button>
+                    <button id="reset-btn">Reset</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <i>⚡</i>
+                <h3>Fast Processing</h3>
+                <p>Resize images quickly with our optimized processing engine</p>
+            </div>
+            <div class="feature-card">
+                <i>🔒</i>
+                <h3>Privacy Focused</h3>
+                <p>Your images are processed locally and never uploaded to our servers</p>
+            </div>
+            <div class="feature-card">
+                <i>📱</i>
+                <h3>Mobile Friendly</h3>
+                <p>Works perfectly on all devices - desktop, tablet, and mobile</p>
+            </div>
+            <div class="feature-card">
+                <i>💯</i>
+                <h3>High Quality</h3>
+                <p>Maintain image quality with customizable compression settings</p>
+            </div>
+        </section>
+
+        <!-- Ad Space - Bottom -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- Google AdSense Ad Unit -->
+            <div id="ad-unit-bottom">
+                <!-- AdSense code will be inserted here -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Image Resizer Tool. All rights reserved.</p>
+            <p>This tool processes images locally in your browser for maximum privacy.</p>
+        </div>
+    </footer>
+
+    <div class="notification" id="notification">Image resized successfully!</div>
+
+    <script>
+        // DOM Elements
+        const fileInput = document.getElementById('file-input');
+        const uploadArea = document.getElementById('upload-area');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const imageInfo = document.getElementById('image-info');
+        const widthInput = document.getElementById('width');
+        const heightInput = document.getElementById('height');
+        const maintainRatioCheckbox = document.getElementById('maintain-ratio');
+        const qualitySelect = document.getElementById('quality');
+        const formatSelect = document.getElementById('format');
+        const resizeBtn = document.getElementById('resize-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const loading = document.getElementById('loading');
+        const notification = document.getElementById('notification');
+
+        // Variables
+        let originalImage = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
+        let aspectRatio = 0;
+
+        // Event Listeners
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary-color)';
+            uploadArea.style.backgroundColor = 'rgba(74, 110, 224, 0.1)';
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleImageUpload();
+            }
+        });
+
+        fileInput.addEventListener('change', handleImageUpload);
+
+        widthInput.addEventListener('input', updateHeightBasedOnRatio);
+        heightInput.addEventListener('input', updateWidthBasedOnRatio);
+
+        maintainRatioCheckbox.addEventListener('change', () => {
+            if (maintainRatioCheckbox.checked && originalImage) {
+                updateHeightBasedOnRatio();
+            }
+        });
+
+        resizeBtn.addEventListener('click', resizeImage);
+        downloadBtn.addEventListener('click', downloadImage);
+        resetBtn.addEventListener('click', resetTool);
+
+        // Functions
+        function handleImageUpload() {
+            if (!fileInput.files.length) return;
+            
+            const file = fileInput.files[0];
+            
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                showNotification('Please select a valid image file', 'error');
+                return;
+            }
+            
+            // Validate file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('File size must be less than 5MB', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                originalImage = new Image();
+                originalImage.onload = function() {
+                    originalWidth = originalImage.width;
+                    originalHeight = originalImage.height;
+                    aspectRatio = originalWidth / originalHeight;
+                    
+                    // Update preview
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // Update image info
+                    imageInfo.textContent = `Original dimensions: ${originalWidth} × ${originalHeight} pixels | Size: ${formatFileSize(file.size)}`;
+                    
+                    // Set initial resize dimensions
+                    widthInput.value = originalWidth;
+                    heightInput.value = originalHeight;
+                    
+                    // Enable resize button
+                    resizeBtn.disabled = false;
+                };
+                originalImage.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function updateHeightBasedOnRatio() {
+            if (maintainRatioCheckbox.checked && aspectRatio > 0) {
+                const newWidth = parseInt(widthInput.value) || 1;
+                const newHeight = Math.round(newWidth / aspectRatio);
+                heightInput.value = newHeight;
+            }
+        }
+
+        function updateWidthBasedOnRatio() {
+            if (maintainRatioCheckbox.checked && aspectRatio > 0) {
+                const newHeight = parseInt(heightInput.value) || 1;
+                const newWidth = Math.round(newHeight * aspectRatio);
+                widthInput.value = newWidth;
+            }
+        }
+
+        function resizeImage() {
+            if (!originalImage) {
+                showNotification('Please upload an image first', 'error');
+                return;
+            }
+            
+            loading.style.display = 'block';
+            
+            // Use setTimeout to allow UI to update before processing
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                const newWidth = parseInt(widthInput.value);
+                const newHeight = parseInt(heightInput.value);
+                
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                
+                // Draw the resized image
+                ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
+                
+                // Get the output format
+                let outputFormat = 'image/jpeg';
+                let fileExtension = 'jpg';
+                
+                if (formatSelect.value === 'png') {
+                    outputFormat = 'image/png';
+                    fileExtension = 'png';
+                } else if (formatSelect.value === 'webp') {
+                    outputFormat = 'image/webp';
+                    fileExtension = 'webp';
+                } else if (formatSelect.value === 'original') {
+                    // Use original format if known
+                    if (fileInput.files[0].type === 'image/png') {
+                        outputFormat = 'image/png';
+                        fileExtension = 'png';
+                    } else if (fileInput.files[0].type === 'image/webp') {
+                        outputFormat = 'image/webp';
+                        fileExtension = 'webp';
+                    }
+                    // Default to jpeg for other formats
+                }
+                
+                // Get the quality setting
+                const quality = parseFloat(qualitySelect.value);
+                
+                // Convert to data URL
+                const resizedImageDataUrl = canvas.toDataURL(outputFormat, quality);
+                
+                // Update preview
+                imagePreview.src = resizedImageDataUrl;
+                
+                // Calculate new file size
+                const base64Length = resizedImageDataUrl.length - (resizedImageDataUrl.indexOf(',') + 1);
+                const padding = resizedImageDataUrl.charAt(resizedImageDataUrl.length - 2) === '=' ? 
+                    (resizedImageDataUrl.charAt(resizedImageDataUrl.length - 1) === '=' ? 2 : 1) : 0;
+                const fileSize = Math.floor((base64Length * 3) / 4) - padding;
+                
+                // Update image info
+                imageInfo.textContent = `Resized dimensions: ${newWidth} × ${newHeight} pixels | Size: ${formatFileSize(fileSize)}`;
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+                downloadBtn.style.display = 'inline-block';
+                
+                // Store the resized image data for download
+                downloadBtn.dataset.imageData = resizedImageDataUrl;
+                downloadBtn.dataset.fileExtension = fileExtension;
+                
+                loading.style.display = 'none';
+                showNotification('Image resized successfully!');
+            }, 100);
+        }
+
+        function downloadImage() {
+            if (!downloadBtn.dataset.imageData) return;
+            
+            const a = document.createElement('a');
+            a.href = downloadBtn.dataset.imageData;
+            a.download = `resized-image.${downloadBtn.dataset.fileExtension}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function resetTool() {
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            originalImage = null;
+            originalWidth = 0;
+            originalHeight = 0;
+            aspectRatio = 0;
+            resizeBtn.disabled = true;
+            downloadBtn.disabled = true;
+            downloadBtn.style.display = 'none';
+            widthInput.value = '800';
+            heightInput.value = '600';
+            qualitySelect.value = '0.8';
+            formatSelect.value = 'original';
+            maintainRatioCheckbox.checked = true;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (type === 'error') {
+                notification.style.backgroundColor = '#dc3545';
+            } else {
+                notification.style.backgroundColor = 'var(--success-color)';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
