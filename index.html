@@ -15,8 +15,8 @@
             --dark: #212529;
             --gray: #6c757d;
             --success: #4cc9f0;
-            --border-radius: 12px;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
         }
 
@@ -137,13 +137,13 @@
 
         /* Hero Section */
         .hero {
-            padding: 5rem 0;
+            padding: 4rem 0;
             background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -152,7 +152,7 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             max-width: 700px;
             margin: 0 auto 2rem;
             color: var(--gray);
@@ -168,11 +168,11 @@
         /* Tools Section */
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--dark);
             margin-bottom: 1rem;
         }
@@ -185,9 +185,9 @@
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 2rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem 0;
         }
 
         .tool-card {
@@ -202,22 +202,22 @@
         }
 
         .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
 
         .tool-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            height: 120px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2rem;
             color: white;
         }
 
         .tool-content {
-            padding: 1.5rem;
+            padding: 1.2rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -226,12 +226,15 @@
         .tool-content h3 {
             margin-bottom: 0.5rem;
             color: var(--dark);
+            font-size: 1.1rem;
         }
 
         .tool-content p {
             color: var(--gray);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             flex-grow: 1;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .tool-link {
@@ -241,6 +244,7 @@
             font-weight: 600;
             text-decoration: none;
             transition: var(--transition);
+            font-size: 0.9rem;
         }
 
         .tool-link:hover {
@@ -249,44 +253,44 @@
 
         /* Features Section */
         .features {
-            padding: 5rem 0;
+            padding: 4rem 0;
             background: white;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
         .feature-card {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
+            margin: 0 auto 1.2rem;
+            font-size: 1.8rem;
             color: white;
         }
 
         /* CTA Section */
         .cta {
-            padding: 5rem 0;
+            padding: 4rem 0;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
         }
 
         .cta h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 1rem;
         }
 
@@ -300,7 +304,7 @@
         footer {
             background: var(--dark);
             color: white;
-            padding: 3rem 0 1.5rem;
+            padding: 2.5rem 0 1.5rem;
         }
 
         .footer-content {
@@ -311,8 +315,8 @@
         }
 
         .footer-column h3 {
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .footer-column ul {
@@ -320,13 +324,14 @@
         }
 
         .footer-column ul li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.7rem;
         }
 
         .footer-column a {
             color: #adb5bd;
             text-decoration: none;
             transition: var(--transition);
+            font-size: 0.9rem;
         }
 
         .footer-column a:hover {
@@ -343,8 +348,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             transition: var(--transition);
@@ -360,17 +365,17 @@
             padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #adb5bd;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* Responsive Styles */
         @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
             
             .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
 
@@ -405,7 +410,7 @@
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .hero-buttons {
@@ -417,11 +422,16 @@
                 width: 100%;
                 max-width: 300px;
             }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.2rem;
+            }
         }
 
         @media (max-width: 576px) {
             .hero {
-                padding: 3rem 0;
+                padding: 2.5rem 0;
             }
             
             .hero h1 {
@@ -429,11 +439,25 @@
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .features-grid, .footer-content {
                 grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+            
+            .tool-icon {
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .tool-content {
+                padding: 1rem;
             }
         }
     </style>
@@ -494,7 +518,7 @@
             <!-- Image Tools -->
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-pdf"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Merge PDF</h3>
@@ -505,7 +529,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-cut"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Split PDF</h3>
@@ -516,7 +540,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-powerpoint"></i>
                 </div>
                 <div class="tool-content">
                     <h3>PDF to PowerPoint</h3>
@@ -527,7 +551,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-excel"></i>
                 </div>
                 <div class="tool-content">
                     <h3>PDF to Excel</h3>
@@ -538,7 +562,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-word"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Word to PDF</h3>
@@ -549,7 +573,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-powerpoint"></i>
                 </div>
                 <div class="tool-content">
                     <h3>PowerPoint to PDF</h3>
@@ -560,7 +584,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-excel"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Excel to PDF</h3>
@@ -571,18 +595,18 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-edit"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Edit PDF</h3>
-                    <p>Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.</p>
+                    <p>Add text, images, shapes or freehand annotations to a PDF document.</p>
                     <a href="/tools/edit-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-image"></i>
                 </div>
                 <div class="tool-content">
                     <h3>PDF to JPG</h3>
@@ -593,7 +617,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-file-pdf"></i>
                 </div>
                 <div class="tool-content">
                     <h3>JPG to PDF</h3>
@@ -604,7 +628,7 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-signature"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Sign PDF</h3>
@@ -615,18 +639,18 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-tint"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Watermark PDF</h3>
-                    <p>Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position..</p>
+                    <p>Stamp an image or text over your PDF in seconds.</p>
                     <a href="/tools/watermark-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-sync"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Rotate PDF</h3>
@@ -637,18 +661,18 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-code"></i>
                 </div>
                 <div class="tool-content">
                     <h3>HTML to PDF</h3>
-                    <p>Convert webpages in HTML to PDF. Copy and paste the URL of the page you want and convert it to PDF with a click.</p>
+                    <p>Convert webpages in HTML to PDF with a simple URL.</p>
                     <a href="/tools/html-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-unlock"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Unlock PDF</h3>
@@ -659,51 +683,51 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-sort"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Organize PDF</h3>
-                    <p>Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.</p>
+                    <p>Sort pages of your PDF file however you like.</p>
                     <a href="/tools/pdf-organize-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-wrench"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Repair PDF</h3>
-                    <p>Repair a damaged PDF and recover data from corrupt PDF. Fix PDF files with our Repair tool.</p>
+                    <p>Repair a damaged PDF and recover data from corrupt PDF.</p>
                     <a href="/tools/pdf-repair-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-sort-numeric-up"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Page Number</h3>
-                    <p>Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.</p>
+                    <p>Add page numbers into PDFs with ease.</p>
                     <a href="/tools/page-numbers.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-qrcode"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Scan to PDF</h3>
-                    <p>Capture document scans from your mobile device and send them instantly to your browser.</p>
+                    <p>Capture document scans from your mobile device.</p>
                     <a href="/tools/scan-to-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-search"></i>
                 </div>
                 <div class="tool-content">
                     <h3>OCR PDF</h3>
@@ -714,44 +738,44 @@
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-columns"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Compare PDF</h3>
-                    <p>Show a side-by-side document comparison and easily spot changes between different file versions.</p>
+                    <p>Show a side-by-side document comparison and easily spot changes.</p>
                     <a href="/tools/pdf-comparison-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-eye-slash"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Redact PDF</h3>
-                    <p>Redact text and graphics to permanently remove sensitive information from a PDF.</p>
+                    <p>Redact text and graphics to permanently remove sensitive information.</p>
                     <a href="/tools/redact-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-crop"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Crop PDF</h3>
-                    <p>Crop margins of PDF documents or select specific areas, then apply the changes to one page or the whole document.</p>
+                    <p>Crop margins of PDF documents or select specific areas.</p>
                     <a href="/tools/crop-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
+                    <i class="fas fa-crop-alt"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Crop Image</h3>
-                    <p>Crop JPG, PNG, or GIFs with ease; Choose pixels to define your rectangle or use our visual editor.</p>
+                    <p>Crop JPG, PNG, or GIFs with ease.</p>
                     <a href="/tools/crop-img-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
@@ -762,14 +786,14 @@
                 </div>
                 <div class="tool-content">
                     <h3>Image Compressor</h3>
-                    <p>Reduce image file size without losing quality. Perfect for web optimization.</p>
+                    <p>Reduce image file size without losing quality.</p>
                     <a href="/tools/img-compress.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-file-image"></i>
+                    <i class="fas fa-exchange-alt"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Image Converter</h3>
@@ -780,7 +804,7 @@
             
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-crop-alt"></i>
+                    <i class="fas fa-expand-arrows-alt"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Image Resizer</h3>
@@ -803,7 +827,7 @@
             
             <div class="tool-card">
                 <div class="tool-icon">
-                    <i class="fas fa-exchange-alt"></i>
+                    <i class="fas fa-file-word"></i>
                 </div>
                 <div class="tool-content">
                     <h3>PDF to Word</h3>
