@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to redact sensitive information from PDF documents. Protect your privacy by securely blacking out text in PDF files.">
+    <meta name="keywords" content="PDF redact, redact PDF, PDF editor, secure PDF, privacy tool">
+    <title>Secure PDF Redaction Tool | Protect Sensitive Information</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 4px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--danger-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+
+        .upload-section {
+            border: 2px dashed #ddd;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+        }
+
+        .upload-section i {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .upload-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .settings-section {
+            margin-top: 2rem;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .setting-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .setting-group select, .setting-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .color-option.active {
+            border-color: var(--dark-color);
+        }
+
+        .preview-section {
+            margin-top: 2rem;
+        }
+
+        .preview-container {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            min-height: 400px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: var(--gray-color);
+        }
+
+        .preview-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .ad-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .ad-container h3 {
+            margin-bottom: 1rem;
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+
+        .ad-placeholder {
+            background-color: #f8f9fa;
+            border: 1px dashed #ddd;
+            padding: 3rem 1rem;
+            color: var(--gray-color);
+        }
+
+        .info-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+
+        .info-box h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .info-box ul {
+            padding-left: 1.5rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .ad-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* PDF preview styles */
+        .pdf-preview {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .pdf-canvas {
+            max-width: 100%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .redaction-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .redaction-box {
+            position: absolute;
+            background-color: black;
+            pointer-events: auto;
+            cursor: move;
+        }
+
+        .redaction-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        .top-left { top: -5px; left: -5px; cursor: nw-resize; }
+        .top-right { top: -5px; right: -5px; cursor: ne-resize; }
+        .bottom-left { bottom: -5px; left: -5px; cursor: sw-resize; }
+        .bottom-right { bottom: -5px; right: -5px; cursor: se-resize; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">PDF<span>Redact</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Secure PDF Redaction Tool</h1>
+            <p>Protect sensitive information in your PDF documents by securely redacting text, images, and other content before sharing.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="tool-container">
+                <div class="upload-section">
+                    <i>📄</i>
+                    <h2>Upload Your PDF Document</h2>
+                    <p>Drag & drop your PDF file here or click to browse</p>
+                    <div class="upload-btn" id="upload-trigger">Select PDF File</div>
+                    <input type="file" id="file-input" accept=".pdf">
+                </div>
+
+                <div class="settings-section">
+                    <h3>Redaction Settings</h3>
+                    
+                    <div class="setting-group">
+                        <label for="redaction-color">Redaction Color</label>
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: #000000;" data-color="#000000"></div>
+                            <div class="color-option" style="background-color: #ff0000;" data-color="#ff0000"></div>
+                            <div class="color-option" style="background-color: #0000ff;" data-color="#0000ff"></div>
+                            <div class="color-option" style="background-color: #333333;" data-color="#333333"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="redaction-mode">Redaction Mode</label>
+                        <select id="redaction-mode">
+                            <option value="manual">Manual Selection</option>
+                            <option value="text">Text Search & Redact</option>
+                            <option value="auto">Auto-detect Sensitive Data</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group" id="text-search-group" style="display: none;">
+                        <label for="search-text">Text to Redact</label>
+                        <input type="text" id="search-text" placeholder="Enter text to search and redact">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="output-format">Output Format</label>
+                        <select id="output-format">
+                            <option value="pdf">PDF (Preserves formatting)</option>
+                            <option value="image">Image (More secure)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h3>Document Preview</h3>
+                    <div class="preview-container">
+                        <div class="preview-placeholder" id="preview-placeholder">
+                            <i>📋</i>
+                            <p>Your PDF will appear here after upload</p>
+                        </div>
+                        <div class="pdf-preview" id="pdf-preview">
+                            <canvas id="pdf-canvas" class="pdf-canvas"></canvas>
+                            <div class="redaction-overlay" id="redaction-overlay"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="add-redaction-btn">Add Redaction Area</button>
+                        <button class="btn btn-success" id="process-btn">Process & Download</button>
+                        <button class="btn btn-danger" id="reset-btn">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="ad-container">
+                    <h3>Advertisement</h3>
+                    <div class="ad-placeholder" id="ad-unit-1">
+                        <!-- Google AdSense Ad Unit -->
+                        <!-- Insert your AdSense code here -->
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>How to Use This Tool</h3>
+                    <ul>
+                        <li>Upload your PDF document</li>
+                        <li>Adjust redaction settings as needed</li>
+                        <li>Click and drag to create redaction areas</li>
+                        <li>Process and download your secure PDF</li>
+                    </ul>
+                </div>
+                
+                <div class="ad-container">
+                    <h3>Advertisement</h3>
+                    <div class="ad-placeholder" id="ad-unit-2">
+                        <!-- Google AdSense Ad Unit -->
+                        <!-- Insert your AdSense code here -->
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">PDF<span>Redact</span></div>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 PDFRedact Tool. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const fileInput = document.getElementById('file-input');
+        const uploadTrigger = document.getElementById('upload-trigger');
+        const previewPlaceholder = document.getElementById('preview-placeholder');
+        const pdfPreview = document.getElementById('pdf-preview');
+        const pdfCanvas = document.getElementById('pdf-canvas');
+        const redactionOverlay = document.getElementById('redaction-overlay');
+        const redactionMode = document.getElementById('redaction-mode');
+        const textSearchGroup = document.getElementById('text-search-group');
+        const addRedactionBtn = document.getElementById('add-redaction-btn');
+        const processBtn = document.getElementById('process-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const colorOptions = document.querySelectorAll('.color-option');
+
+        // Variables
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.2;
+        let canvasContext = pdfCanvas.getContext('2d');
+        let redactionColor = '#000000';
+        let redactionAreas = [];
+
+        // Event Listeners
+        uploadTrigger.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+        redactionMode.addEventListener('change', toggleRedactionMode);
+        addRedactionBtn.addEventListener('click', enableRedactionMode);
+        processBtn.addEventListener('click', processRedaction);
+        resetBtn.addEventListener('click', resetTool);
+        
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                redactionColor = option.getAttribute('data-color');
+            });
+        });
+
+        // Functions
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                const fileReader = new FileReader();
+                
+                fileReader.onload = function() {
+                    const typedarray = new Uint8Array(this.result);
+                    
+                    // Load PDF using PDF.js
+                    pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                        pdfDoc = pdf;
+                        previewPlaceholder.style.display = 'none';
+                        pdfPreview.style.display = 'block';
+                        renderPage(pageNum);
+                    }).catch(function(error) {
+                        alert('Error loading PDF: ' + error.message);
+                    });
+                };
+                
+                fileReader.readAsArrayBuffer(file);
+            } else {
+                alert('Please select a valid PDF file.');
+            }
+        }
+
+        function renderPage(num) {
+            pageRendering = true;
+            
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                pdfCanvas.height = viewport.height;
+                pdfCanvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: canvasContext,
+                    viewport: viewport
+                };
+                
+                const renderTask = page.render(renderContext);
+                
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+        }
+
+        function toggleRedactionMode() {
+            if (redactionMode.value === 'text') {
+                textSearchGroup.style.display = 'block';
+            } else {
+                textSearchGroup.style.display = 'none';
+            }
+        }
+
+        function enableRedactionMode() {
+            if (!pdfDoc) {
+                alert('Please upload a PDF first.');
+                return;
+            }
+            
+            // In a real implementation, this would enable interactive redaction
+            alert('Click and drag on the PDF to create redaction areas. This is a demo - in a real application, this would be fully functional.');
+            
+            // Demo: Add a sample redaction area
+            addSampleRedaction();
+        }
+
+        function addSampleRedaction() {
+            const redactionBox = document.createElement('div');
+            redactionBox.className = 'redaction-box';
+            redactionBox.style.backgroundColor = redactionColor;
+            redactionBox.style.width = '150px';
+            redactionBox.style.height = '30px';
+            redactionBox.style.top = '100px';
+            redactionBox.style.left = '100px';
+            
+            // Add resize handles (simplified for demo)
+            const handles = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+            handles.forEach(handle => {
+                const handleEl = document.createElement('div');
+                handleEl.className = `redaction-handle ${handle}`;
+                redactionBox.appendChild(handleEl);
+            });
+            
+            redactionOverlay.appendChild(redactionBox);
+            redactionAreas.push(redactionBox);
+        }
+
+        function processRedaction() {
+            if (!pdfDoc) {
+                alert('Please upload a PDF first.');
+                return;
+            }
+            
+            if (redactionAreas.length === 0) {
+                alert('Please add at least one redaction area before processing.');
+                return;
+            }
+            
+            // In a real implementation, this would process the PDF with redactions
+            alert('Processing complete! Your redacted PDF is ready for download. This is a demo - in a real application, the PDF would be processed and downloaded.');
+            
+            // Demo: Simulate download
+            simulateDownload();
+        }
+
+        function simulateDownload() {
+            const link = document.createElement('a');
+            link.download = 'redacted-document.pdf';
+            link.href = '#';
+            link.click();
+        }
+
+        function resetTool() {
+            if (confirm('Are you sure you want to reset? All redactions will be lost.')) {
+                fileInput.value = '';
+                pdfDoc = null;
+                pageNum = 1;
+                redactionAreas = [];
+                redactionOverlay.innerHTML = '';
+                previewPlaceholder.style.display = 'flex';
+                pdfPreview.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        toggleRedactionMode();
+    </script>
+    
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</body>
+</html>
