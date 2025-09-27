@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online OCR PDF tool to extract text from PDF files. Convert scanned PDFs to editable text with high accuracy.">
+    <meta name="keywords" content="OCR, PDF, text extraction, scanned documents, PDF to text, online OCR">
+    <title>OCR PDF Tool - Extract Text from PDF Files Online</title>
+    <style>
+        :root {
+            --primary-color: #4a6ee0;
+            --primary-dark: #3a5ac8;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #ddd;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tool-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            margin-bottom: 15px;
+            color: var(--light-text);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .settings-panel {
+            background-color: var(--secondary-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .select-wrapper, .input-wrapper {
+            position: relative;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: white;
+            font-size: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .progress-container {
+            margin: 25px 0;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .result-content {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: var(--secondary-color);
+        }
+
+        .ad-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .ad-space {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius);
+            margin: 0 auto;
+        }
+
+        .ad-space.horizontal {
+            width: 728px;
+            height: 90px;
+            max-width: 100%;
+        }
+
+        .ad-space.vertical {
+            width: 300px;
+            height: 250px;
+        }
+
+        footer {
+            background-color: white;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: var(--light-text);
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tool-tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                text-align: center;
+            }
+
+            .ad-space.horizontal {
+                width: 100%;
+                height: 90px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">OCR PDF Tool</a>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Extract Text from PDF Files with OCR</h1>
+            <p>Convert scanned PDF documents into editable text with our advanced OCR technology. Fast, accurate, and completely free to use.</p>
+        </section>
+
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-space horizontal" id="ad-top">
+                <!-- AdSense Ad Unit will be inserted here -->
+                <span>AdSense Ad Unit (Top)</span>
+            </div>
+        </div>
+
+        <section class="tool-container">
+            <div class="tool-tabs">
+                <div class="tab active" data-tab="upload">Upload PDF</div>
+                <div class="tab" data-tab="url">From URL</div>
+                <div class="tab" data-tab="drive">Google Drive</div>
+            </div>
+
+            <div class="tab-content active" id="upload-tab">
+                <div class="upload-area" id="drop-area">
+                    <i>📄</i>
+                    <p>Drag & Drop your PDF file here</p>
+                    <p>or</p>
+                    <button class="btn" id="browse-btn">Browse Files</button>
+                    <input type="file" id="file-input" accept=".pdf" style="display: none;">
+                </div>
+
+                <div class="settings-panel">
+                    <h3>OCR Settings</h3>
+                    <div class="setting-group">
+                        <label for="language">Language</label>
+                        <div class="select-wrapper">
+                            <select id="language">
+                                <option value="eng">English</option>
+                                <option value="spa">Spanish</option>
+                                <option value="fra">French</option>
+                                <option value="deu">German</option>
+                                <option value="ita">Italian</option>
+                                <option value="por">Portuguese</option>
+                                <option value="rus">Russian</option>
+                                <option value="chi_sim">Chinese (Simplified)</option>
+                                <option value="jpn">Japanese</option>
+                                <option value="kor">Korean</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="output-format">Output Format</label>
+                        <div class="select-wrapper">
+                            <select id="output-format">
+                                <option value="txt">Plain Text (.txt)</option>
+                                <option value="docx">Microsoft Word (.docx)</option>
+                                <option value="pdf">Searchable PDF</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="page-range">Page Range (e.g., 1-5, 8, 11-13)</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="page-range" placeholder="All pages">
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="preserve-layout">
+                            <label for="preserve-layout">Preserve original layout</label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="detect-tables">
+                            <label for="detect-tables">Detect and extract tables</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" id="process-btn">Extract Text</button>
+
+                <div class="progress-container" id="progress-container">
+                    <p>Processing your PDF...</p>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                    <p id="progress-text">0%</p>
+                </div>
+
+                <div class="result-container" id="result-container">
+                    <div class="result-header">
+                        <h3>Extracted Text</h3>
+                        <div>
+                            <button class="btn btn-secondary" id="copy-btn">Copy Text</button>
+                            <button class="btn" id="download-btn">Download</button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="result-content">
+                        <!-- Extracted text will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="url-tab">
+                <div class="settings-panel">
+                    <div class="setting-group">
+                        <label for="pdf-url">PDF URL</label>
+                        <div class="input-wrapper">
+                            <input type="url" id="pdf-url" placeholder="https://example.com/document.pdf">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn">Extract Text from URL</button>
+            </div>
+
+            <div class="tab-content" id="drive-tab">
+                <div class="settings-panel">
+                    <p>Connect to your Google Drive account to select a PDF file.</p>
+                </div>
+                <button class="btn">Connect Google Drive</button>
+            </div>
+        </section>
+
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-space vertical" id="ad-sidebar">
+                <!-- AdSense Ad Unit will be inserted here -->
+                <span>AdSense Ad Unit (Sidebar)</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OCR PDF Tool</h3>
+                    <p>Extract text from PDF documents with our advanced OCR technology. Fast, accurate, and completely free to use.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 OCR PDF Tool. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // File upload functionality
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const browseBtn = document.getElementById('browse-btn');
+        const processBtn = document.getElementById('process-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const resultContainer = document.getElementById('result-container');
+        const resultContent = document.getElementById('result-content');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+
+        // Browse button click
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // File input change
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropArea.style.borderColor = 'var(--primary-color)';
+            dropArea.style.backgroundColor = 'var(--secondary-color)';
+        }
+
+        function unhighlight() {
+            dropArea.style.borderColor = 'var(--border-color)';
+            dropArea.style.backgroundColor = 'white';
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === 'application/pdf') {
+                    // Display file name
+                    dropArea.innerHTML = `<p>Selected file: <strong>${file.name}</strong></p>`;
+                    // Enable process button
+                    processBtn.disabled = false;
+                } else {
+                    alert('Please select a PDF file.');
+                }
+            }
+        }
+
+        // Process button click
+        processBtn.addEventListener('click', () => {
+            // Show progress container
+            progressContainer.style.display = 'block';
+            
+            // Simulate OCR processing
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Show result after a short delay
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                        resultContainer.style.display = 'block';
+                        
+                        // Display sample extracted text
+                        resultContent.innerHTML = `
+                            <h4>Sample Extracted Text</h4>
+                            <p>This is a demonstration of how extracted text would appear. In a real application, this would be the actual text extracted from your PDF document using OCR technology.</p>
+                            <p>The tool would accurately recognize characters and words from your scanned document, preserving the original formatting as much as possible based on your settings.</p>
+                            <p>You can then copy this text to your clipboard or download it in your chosen format.</p>
+                        `;
+                    }, 500);
+                }
+                
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}%`;
+            }, 200);
+        });
+
+        // Copy text button
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = resultContent.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Show success message
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // Download button
+        downloadBtn.addEventListener('click', () => {
+            // In a real application, this would download the extracted text
+            alert('In a real application, this would download the extracted text in your chosen format.');
+        });
+
+        // AdSense integration (placeholder)
+        // In a real implementation, you would insert your AdSense code here
+        function initializeAds() {
+            // Top ad
+            const adTop = document.getElementById('ad-top');
+            // adTop.innerHTML = 'Your AdSense code for top banner ad';
+            
+            // Sidebar ad
+            const adSidebar = document.getElementById('ad-sidebar');
+            // adSidebar.innerHTML = 'Your AdSense code for sidebar ad';
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', initializeAds);
+    </script>
+</body>
+</html>
