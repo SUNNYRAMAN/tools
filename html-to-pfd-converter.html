@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online HTML to PDF converter. Convert web pages to PDF documents with customizable settings. Fast, secure, and easy to use.">
+    <meta name="keywords" content="HTML to PDF, PDF converter, web to PDF, online PDF tool">
+    <title>HTML to PDF Converter | Free Online Tool</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #2ecc71;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: #ecf0f1;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: white;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #666;
+        }
+
+        .converter {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .converter {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-section, .settings-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            margin-bottom: 1rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 576px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .select-option {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .ad-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .ad-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .ad-space {
+            min-height: 90px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #ddd;
+            border-radius: var(--border-radius);
+            margin: 0 auto;
+        }
+
+        .ad-space.large {
+            width: 728px;
+            height: 90px;
+            max-width: 100%;
+        }
+
+        .ad-space.medium {
+            width: 300px;
+            height: 250px;
+        }
+
+        .ad-space.small {
+            width: 320px;
+            height: 100px;
+        }
+
+        @media (max-width: 768px) {
+            .ad-space.large {
+                width: 100%;
+                height: 90px;
+            }
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+            z-index: 1000;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--secondary-color);
+                padding: 1rem 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 0;
+                text-align: center;
+                padding: 0.8rem 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>📄</i> HTMLtoPDF
+                </div>
+                <div class="mobile-menu">☰</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Convert HTML to PDF in Seconds</h1>
+            <p>Our free online tool allows you to convert HTML code or web pages to PDF documents with customizable settings. Fast, secure, and easy to use.</p>
+        </div>
+    </section>
+
+    <!-- Ad Space - Top -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-space large" id="ad-top">
+                <!-- Google AdSense Ad Unit will be placed here -->
+                <p>Ad Space (728x90)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Converter Tool -->
+    <div class="container">
+        <div class="converter">
+            <!-- Input Section -->
+            <div class="input-section">
+                <h2 class="section-title"><i>📥</i> Input</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="html">HTML Code</div>
+                    <div class="tab" data-tab="url">Web URL</div>
+                </div>
+                
+                <div class="tab-content active" id="html-tab">
+                    <textarea placeholder="Paste your HTML code here..."></textarea>
+                    <div class="buttons">
+                        <button class="btn btn-secondary"><i>📋</i> Paste HTML</button>
+                        <button class="btn btn-secondary"><i>📁</i> Upload File</button>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="url-tab">
+                    <input type="text" class="url-input" placeholder="Enter website URL (e.g., https://example.com)">
+                    <div class="buttons">
+                        <button class="btn btn-secondary"><i>🌐</i> Fetch URL</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="settings-section">
+                <h2 class="section-title"><i>⚙️</i> PDF Settings</h2>
+                
+                <div class="option-group">
+                    <h3>Page Size</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="size-a4" name="page-size" checked>
+                            <label for="size-a4">A4</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="size-letter" name="page-size">
+                            <label for="size-letter">Letter</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="size-legal" name="page-size">
+                            <label for="size-legal">Legal</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="size-tabloid" name="page-size">
+                            <label for="size-tabloid">Tabloid</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Orientation</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="orientation-portrait" name="orientation" checked>
+                            <label for="orientation-portrait">Portrait</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="orientation-landscape" name="orientation">
+                            <label for="orientation-landscape">Landscape</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Margins</h3>
+                    <div class="options">
+                        <div class="option">
+                            <label for="margin-top">Top:</label>
+                            <input type="number" id="margin-top" class="select-option" value="10" min="0" max="100"> mm
+                        </div>
+                        <div class="option">
+                            <label for="margin-bottom">Bottom:</label>
+                            <input type="number" id="margin-bottom" class="select-option" value="10" min="0" max="100"> mm
+                        </div>
+                        <div class="option">
+                            <label for="margin-left">Left:</label>
+                            <input type="number" id="margin-left" class="select-option" value="10" min="0" max="100"> mm
+                        </div>
+                        <div class="option">
+                            <label for="margin-right">Right:</label>
+                            <input type="number" id="margin-right" class="select-option" value="10" min="0" max="100"> mm
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Additional Options</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="header-footer" checked>
+                            <label for="header-footer">Include Header & Footer</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="background" checked>
+                            <label for="background">Include Background</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="images" checked>
+                            <label for="images">Include Images</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="javascript">
+                            <label for="javascript">Enable JavaScript</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Quality</h3>
+                    <select class="select-option">
+                        <option value="standard">Standard</option>
+                        <option value="high" selected>High</option>
+                        <option value="ultra">Ultra High</option>
+                    </select>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn btn-primary" id="convert-btn"><i>🔄</i> Convert to PDF</button>
+                    <button class="btn btn-secondary"><i>🗑️</i> Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Converting to PDF... Please wait.</p>
+    </div>
+
+    <!-- Ad Space - Middle -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-space medium" id="ad-middle">
+                <!-- Google AdSense Ad Unit will be placed here -->
+                <p>Ad Space (300x250)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container">
+        <div class="input-section">
+            <h2 class="section-title"><i>⭐</i> Why Choose Our HTML to PDF Converter?</h2>
+            <div class="options" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="option-group">
+                    <h3>High Quality</h3>
+                    <p>Generate PDFs with crisp text and sharp images at high resolution.</p>
+                </div>
+                <div class="option-group">
+                    <h3>Customizable</h3>
+                    <p>Adjust page size, orientation, margins, and other settings to your needs.</p>
+                </div>
+                <div class="option-group">
+                    <h3>Fast Conversion</h3>
+                    <p>Our optimized algorithm converts your HTML to PDF in seconds.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Space - Bottom -->
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-space small" id="ad-bottom">
+                <!-- Google AdSense Ad Unit will be placed here -->
+                <p>Ad Space (320x100)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>HTMLtoPDF</h3>
+                    <p>Convert HTML to PDF quickly and easily with our free online tool. No installation required.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 HTMLtoPDF Converter. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        PDF conversion completed successfully!
+    </div>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Convert button functionality
+        document.getElementById('convert-btn').addEventListener('click', () => {
+            // Show loading indicator
+            document.getElementById('loading').style.display = 'block';
+            
+            // Simulate conversion process
+            setTimeout(() => {
+                // Hide loading indicator
+                document.getElementById('loading').style.display = 'none';
+                
+                // Show success notification
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                
+                // Hide notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+                
+                // In a real implementation, this would trigger the PDF download
+                // For demo purposes, we'll just show a notification
+            }, 2000);
+        });
+
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu').addEventListener('click', () => {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // AdSense integration placeholder
+        // In a real implementation, you would insert the AdSense code here
+        // For example:
+        /*
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_AD_UNIT_ID" crossorigin="anonymous"></script>
+        */
+    </script>
+</body>
+</html>
