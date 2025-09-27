@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to compare PDF documents side by side. Highlight differences between PDF files with our responsive comparison tool.">
+    <meta name="keywords" content="PDF compare, PDF comparison tool, document comparison, PDF diff">
+    <title>PDF Compare Tool | Compare PDF Documents Online</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --border-radius: 4px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-box {
+            flex: 1;
+            min-width: 300px;
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .upload-box:hover {
+            border-color: var(--primary-color);
+            background-color: #f9f9f9;
+        }
+
+        .upload-box h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .settings-panel {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .setting-group {
+            margin-bottom: 1rem;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .setting-group select, .setting-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        .compare-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .compare-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-header h3 {
+            color: var(--secondary-color);
+        }
+
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pdf-viewer {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            overflow: auto;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-placeholder {
+            text-align: center;
+            color: #666;
+        }
+
+        .pdf-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .difference-highlights {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #fff9e6;
+            border-radius: var(--border-radius);
+        }
+
+        .difference-highlights h4 {
+            margin-bottom: 0.5rem;
+            color: var(--warning-color);
+        }
+
+        .difference-list {
+            list-style-type: none;
+        }
+
+        .difference-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .ad-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .ad-placeholder {
+            background-color: #f0f0f0;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .upload-section {
+                flex-direction: column;
+            }
+
+            .results-container {
+                flex-direction: column;
+            }
+
+            .pdf-viewer {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">PDFCompare</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Compare PDF Documents Online</h1>
+            <p>Upload two PDF files and instantly see the differences between them. Our tool highlights changes in text, formatting, and layout.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="ad-container">
+            <div class="ad-placeholder">
+                <!-- Google AdSense Ad Unit -->
+                <!-- Replace with your AdSense code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                     crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div class="tool-container">
+                <div class="upload-section">
+                    <div class="upload-box" id="upload-box-1">
+                        <div class="upload-icon">📄</div>
+                        <h3>Upload First PDF</h3>
+                        <p>Drag & drop your file here or click to browse</p>
+                        <input type="file" class="file-input" id="file-input-1" accept=".pdf">
+                        <div class="file-info" id="file-info-1">No file selected</div>
+                    </div>
+                    <div class="upload-box" id="upload-box-2">
+                        <div class="upload-icon">📄</div>
+                        <h3>Upload Second PDF</h3>
+                        <p>Drag & drop your file here or click to browse</p>
+                        <input type="file" class="file-input" id="file-input-2" accept=".pdf">
+                        <div class="file-info" id="file-info-2">No file selected</div>
+                    </div>
+                </div>
+
+                <div class="settings-panel">
+                    <h3>Comparison Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="comparison-type">Comparison Type</label>
+                            <select id="comparison-type">
+                                <option value="text">Text Content Only</option>
+                                <option value="layout">Layout and Formatting</option>
+                                <option value="full">Full Document Comparison</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="sensitivity">Sensitivity Level</label>
+                            <select id="sensitivity">
+                                <option value="low">Low (Major Changes Only)</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High (All Changes)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="output-format">Output Format</label>
+                            <select id="output-format">
+                                <option value="side-by-side">Side by Side View</option>
+                                <option value="overlay">Overlay View</option>
+                                <option value="unified">Unified Diff View</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="highlight-color">Highlight Color</label>
+                            <input type="color" id="highlight-color" value="#ffeb3b">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="compare-btn" id="compare-btn">Compare PDFs</button>
+
+                <div class="results-section" id="results-section">
+                    <div class="results-header">
+                        <h3>Comparison Results</h3>
+                        <div>
+                            <button id="download-btn" class="compare-btn" style="background-color: var(--success-color); margin-right: 10px;">Download Report</button>
+                            <button id="reset-btn" class="compare-btn" style="background-color: var(--accent-color);">New Comparison</button>
+                        </div>
+                    </div>
+                    <div class="results-container">
+                        <div class="pdf-viewer" id="pdf-viewer-1">
+                            <div class="pdf-placeholder">
+                                <i>📄</i>
+                                <p>First PDF will appear here</p>
+                            </div>
+                        </div>
+                        <div class="pdf-viewer" id="pdf-viewer-2">
+                            <div class="pdf-placeholder">
+                                <i>📄</i>
+                                <p>Second PDF will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="difference-highlights">
+                        <h4>Differences Found</h4>
+                        <ul class="difference-list" id="difference-list">
+                            <li>No differences detected yet. Upload PDFs and click Compare to see results.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="ad-container">
+            <div class="ad-placeholder">
+                <!-- Google AdSense Ad Unit -->
+                <!-- Replace with your AdSense code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                     crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PDFCompare</h3>
+                    <p>Compare PDF documents quickly and accurately with our online tool. Free to use with no registration required.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: support@pdfcompare.com</li>
+                        <li>Twitter: @pdfcompare</li>
+                        <li>Feedback: Send us your suggestions</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 PDFCompare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // File upload functionality
+            const uploadBox1 = document.getElementById('upload-box-1');
+            const uploadBox2 = document.getElementById('upload-box-2');
+            const fileInput1 = document.getElementById('file-input-1');
+            const fileInput2 = document.getElementById('file-input-2');
+            const fileInfo1 = document.getElementById('file-info-1');
+            const fileInfo2 = document.getElementById('file-info-2');
+            const compareBtn = document.getElementById('compare-btn');
+            const resultsSection = document.getElementById('results-section');
+            const resetBtn = document.getElementById('reset-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const differenceList = document.getElementById('difference-list');
+
+            // Handle file selection for first PDF
+            uploadBox1.addEventListener('click', () => fileInput1.click());
+            uploadBox1.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadBox1.style.borderColor = var(--primary-color);
+                uploadBox1.style.backgroundColor = '#f0f8ff';
+            });
+            uploadBox1.addEventListener('dragleave', () => {
+                uploadBox1.style.borderColor = '#ccc';
+                uploadBox1.style.backgroundColor = '';
+            });
+            uploadBox1.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox1.style.borderColor = '#ccc';
+                uploadBox1.style.backgroundColor = '';
+                if (e.dataTransfer.files.length) {
+                    fileInput1.files = e.dataTransfer.files;
+                    updateFileInfo(fileInfo1, e.dataTransfer.files[0]);
+                }
+            });
+            fileInput1.addEventListener('change', () => {
+                if (fileInput1.files.length) {
+                    updateFileInfo(fileInfo1, fileInput1.files[0]);
+                }
+            });
+
+            // Handle file selection for second PDF
+            uploadBox2.addEventListener('click', () => fileInput2.click());
+            uploadBox2.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadBox2.style.borderColor = var(--primary-color);
+                uploadBox2.style.backgroundColor = '#f0f8ff';
+            });
+            uploadBox2.addEventListener('dragleave', () => {
+                uploadBox2.style.borderColor = '#ccc';
+                uploadBox2.style.backgroundColor = '';
+            });
+            uploadBox2.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox2.style.borderColor = '#ccc';
+                uploadBox2.style.backgroundColor = '';
+                if (e.dataTransfer.files.length) {
+                    fileInput2.files = e.dataTransfer.files;
+                    updateFileInfo(fileInfo2, e.dataTransfer.files[0]);
+                }
+            });
+            fileInput2.addEventListener('change', () => {
+                if (fileInput2.files.length) {
+                    updateFileInfo(fileInfo2, fileInput2.files[0]);
+                }
+            });
+
+            // Update file info display
+            function updateFileInfo(fileInfoElement, file) {
+                fileInfoElement.textContent = `${file.name} (${formatFileSize(file.size)})`;
+                fileInfoElement.style.color = 'var(--success-color)';
+            }
+
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // Compare button functionality
+            compareBtn.addEventListener('click', function() {
+                if (!fileInput1.files.length || !fileInput2.files.length) {
+                    alert('Please upload both PDF files to compare.');
+                    return;
+                }
+
+                // Show loading state
+                compareBtn.textContent = 'Comparing...';
+                compareBtn.disabled = true;
+
+                // Simulate comparison process (in a real app, this would be an API call)
+                setTimeout(() => {
+                    // Show results section
+                    resultsSection.classList.add('active');
+
+                    // Update PDF viewers with placeholders (in a real app, these would be actual PDF renderings)
+                    document.getElementById('pdf-viewer-1').innerHTML = `
+                        <div class="pdf-placeholder">
+                            <i>📄</i>
+                            <p>${fileInput1.files[0].name}</p>
+                            <p><small>PDF rendering would appear here in a real application</small></p>
+                        </div>
+                    `;
+                    
+                    document.getElementById('pdf-viewer-2').innerHTML = `
+                        <div class="pdf-placeholder">
+                            <i>📄</i>
+                            <p>${fileInput2.files[0].name}</p>
+                            <p><small>PDF rendering would appear here in a real application</small></p>
+                        </div>
+                    `;
+
+                    // Generate sample differences (in a real app, these would be actual differences)
+                    const differences = [
+                        "Page 1: Header text changed from 'Quarterly Report' to 'Annual Report'",
+                        "Page 2: Table on the right has 3 additional rows",
+                        "Page 3: Image replaced with updated version",
+                        "Page 4: Paragraph spacing increased by 2pt",
+                        "Page 5: Footer date updated from '2022' to '2023'"
+                    ];
+
+                    // Update differences list
+                    differenceList.innerHTML = '';
+                    differences.forEach(diff => {
+                        const li = document.createElement('li');
+                        li.textContent = diff;
+                        differenceList.appendChild(li);
+                    });
+
+                    // Reset button state
+                    compareBtn.textContent = 'Compare PDFs';
+                    compareBtn.disabled = false;
+                }, 1500);
+            });
+
+            // Reset functionality
+            resetBtn.addEventListener('click', function() {
+                fileInput1.value = '';
+                fileInput2.value = '';
+                fileInfo1.textContent = 'No file selected';
+                fileInfo1.style.color = '#666';
+                fileInfo2.textContent = 'No file selected';
+                fileInfo2.style.color = '#666';
+                resultsSection.classList.remove('active');
+            });
+
+            // Download functionality
+            downloadBtn.addEventListener('click', function() {
+                alert('In a real application, this would download a comparison report.');
+            });
+        });
+    </script>
+</body>
+</html>
