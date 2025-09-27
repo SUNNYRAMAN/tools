@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online image cropping tool. Crop, resize, and edit your images easily with our responsive tool.">
+    <meta name="keywords" content="crop image, image editor, photo crop, online image tool">
+    <title>ImageCrop Pro - Free Online Image Cropping Tool</title>
+    <style>
+        :root {
+            --primary-color: #4a6cf7;
+            --secondary-color: #6a7ff5;
+            --dark-color: #1d2144;
+            --light-color: #f5f8ff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--dark-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            margin-bottom: 15px;
+            color: var(--gray-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            display: none;
+        }
+
+        #imageCanvas {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .crop-overlay {
+            position: absolute;
+            border: 2px dashed white;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            cursor: move;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+        }
+
+        .control-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        .ratio-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .ratio-btn {
+            padding: 8px 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ratio-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .ad-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .output-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #outputImage {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+        }
+
+        .download-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Image<span>Crop</span> Pro</a>
+                <div class="mobile-menu">☰</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How to Use</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="tool-section">
+                <div class="tool-container">
+                    <h2 class="tool-title">Crop Your Image</h2>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <i>📁</i>
+                        <p>Drag & Drop your image here</p>
+                        <p>or</p>
+                        <input type="file" id="imageInput" accept="image/*" class="hidden">
+                        <button class="btn" id="browseBtn">Browse Files</button>
+                    </div>
+
+                    <div class="canvas-container" id="canvasContainer">
+                        <canvas id="imageCanvas"></canvas>
+                        <div class="crop-overlay" id="cropOverlay"></div>
+                    </div>
+
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="widthInput">Width (px)</label>
+                            <input type="number" id="widthInput" min="1" value="300">
+                        </div>
+                        <div class="control-group">
+                            <label for="heightInput">Height (px)</label>
+                            <input type="number" id="heightInput" min="1" value="200">
+                        </div>
+                        <div class="control-group">
+                            <label for="xInput">X Position</label>
+                            <input type="number" id="xInput" min="0" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label for="yInput">Y Position</label>
+                            <input type="number" id="yInput" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <div class="ratio-buttons">
+                        <div class="ratio-btn active" data-ratio="free">Free</div>
+                        <div class="ratio-btn" data-ratio="1:1">1:1 (Square)</div>
+                        <div class="ratio-btn" data-ratio="16:9">16:9 (Widescreen)</div>
+                        <div class="ratio-btn" data-ratio="4:3">4:3 (Standard)</div>
+                        <div class="ratio-btn" data-ratio="3:2">3:2 (Photo)</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn">Reset</button>
+                        <button class="btn" id="cropBtn">Crop Image</button>
+                        <button class="btn btn-success" id="downloadBtn" disabled>Download</button>
+                    </div>
+
+                    <div class="output-preview hidden" id="outputPreview">
+                        <h3>Cropped Image Preview</h3>
+                        <img id="outputImage" src="" alt="Cropped Image">
+                    </div>
+                </div>
+
+                <div class="tool-container">
+                    <h2 class="tool-title">How to Use This Tool</h2>
+                    <ol>
+                        <li>Upload your image by dragging and dropping or clicking "Browse Files"</li>
+                        <li>Adjust the crop area by dragging the corners or using the controls</li>
+                        <li>Select a preset aspect ratio or use freeform cropping</li>
+                        <li>Click "Crop Image" to see the result</li>
+                        <li>Download your cropped image when satisfied</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <!-- AdSense Ad Unit -->
+                    <div id="adsense-ad-1">
+                        <!-- AdSense code will be inserted here -->
+                        <p>AdSense Ad Unit ID: <code>ca-pub-xxxxxxxxxxxxx/yyyyyyyyyy</code></p>
+                        <p>Ad placeholder (320x250)</p>
+                        <div style="width:320px; height:250px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                            AdSense Advertisement
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <!-- AdSense Ad Unit -->
+                    <div id="adsense-ad-2">
+                        <!-- AdSense code will be inserted here -->
+                        <p>AdSense Ad Unit ID: <code>ca-pub-xxxxxxxxxxxxx/zzzzzzzzzz</code></p>
+                        <p>Ad placeholder (300x600)</p>
+                        <div style="width:300px; height:600px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                            AdSense Advertisement
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-container">
+                    <h2 class="tool-title">Image Cropping Tips</h2>
+                    <ul>
+                        <li>For social media, use square (1:1) ratio for Instagram</li>
+                        <li>Use 16:9 ratio for YouTube thumbnails and banners</li>
+                        <li>Keep important elements away from the edges</li>
+                        <li>Higher resolution images produce better results</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ImageCrop Pro</h3>
+                    <p>Free online image cropping tool. Crop, resize, and edit your images easily with our responsive tool.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">How to Use</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ImageCrop Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const canvasContainer = document.getElementById('canvasContainer');
+        const imageCanvas = document.getElementById('imageCanvas');
+        const cropOverlay = document.getElementById('cropOverlay');
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const xInput = document.getElementById('xInput');
+        const yInput = document.getElementById('yInput');
+        const ratioButtons = document.querySelectorAll('.ratio-btn');
+        const resetBtn = document.getElementById('resetBtn');
+        const cropBtn = document.getElementById('cropBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const outputPreview = document.getElementById('outputPreview');
+        const outputImage = document.getElementById('outputImage');
+
+        // Canvas context
+        const ctx = imageCanvas.getContext('2d');
+
+        // Variables
+        let originalImage = null;
+        let cropX = 0;
+        let cropY = 0;
+        let cropWidth = 300;
+        let cropHeight = 200;
+        let isDragging = false;
+        let dragStartX, dragStartY;
+        let currentRatio = 'free';
+
+        // Event Listeners
+        browseBtn.addEventListener('click', () => imageInput.click());
+        imageInput.addEventListener('change', handleImageUpload);
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = var(--primary-color);
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#ccc';
+        });
+        uploadArea.addEventListener('drop', handleImageDrop);
+
+        // Ratio buttons
+        ratioButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                ratioButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentRatio = button.getAttribute('data-ratio');
+                applyAspectRatio();
+            });
+        });
+
+        // Input events
+        widthInput.addEventListener('input', updateCropFromInputs);
+        heightInput.addEventListener('input', updateCropFromInputs);
+        xInput.addEventListener('input', updateCropFromInputs);
+        yInput.addEventListener('input', updateCropFromInputs);
+
+        // Crop and reset buttons
+        cropBtn.addEventListener('click', cropImage);
+        resetBtn.addEventListener('click', resetTool);
+        downloadBtn.addEventListener('click', downloadImage);
+
+        // Crop overlay events
+        cropOverlay.addEventListener('mousedown', startDragging);
+        document.addEventListener('mousemove', dragCrop);
+        document.addEventListener('mouseup', stopDragging);
+
+        // Functions
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                loadImage(file);
+            }
+        }
+
+        function handleImageDrop(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#ccc';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                loadImage(file);
+            }
+        }
+
+        function loadImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalImage = new Image();
+                originalImage.onload = function() {
+                    setupCanvas();
+                    updateCropOverlay();
+                    canvasContainer.style.display = 'block';
+                    outputPreview.classList.add('hidden');
+                    downloadBtn.disabled = true;
+                };
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function setupCanvas() {
+            // Set canvas size to match image but with max dimensions
+            const maxWidth = 800;
+            const maxHeight = 600;
+            
+            let width = originalImage.width;
+            let height = originalImage.height;
+            
+            if (width > maxWidth) {
+                height = (maxWidth / width) * height;
+                width = maxWidth;
+            }
+            
+            if (height > maxHeight) {
+                width = (maxHeight / height) * width;
+                height = maxHeight;
+            }
+            
+            imageCanvas.width = width;
+            imageCanvas.height = height;
+            
+            // Draw image on canvas
+            ctx.drawImage(originalImage, 0, 0, width, height);
+            
+            // Initialize crop dimensions
+            cropWidth = Math.min(300, width);
+            cropHeight = Math.min(200, height);
+            cropX = (width - cropWidth) / 2;
+            cropY = (height - cropHeight) / 2;
+            
+            // Update inputs
+            updateInputs();
+        }
+
+        function updateCropOverlay() {
+            cropOverlay.style.left = `${cropX}px`;
+            cropOverlay.style.top = `${cropY}px`;
+            cropOverlay.style.width = `${cropWidth}px`;
+            cropOverlay.style.height = `${cropHeight}px`;
+        }
+
+        function updateInputs() {
+            widthInput.value = Math.round(cropWidth);
+            heightInput.value = Math.round(cropHeight);
+            xInput.value = Math.round(cropX);
+            yInput.value = Math.round(cropY);
+            xInput.max = imageCanvas.width - cropWidth;
+            yInput.max = imageCanvas.height - cropHeight;
+        }
+
+        function updateCropFromInputs() {
+            cropWidth = parseInt(widthInput.value) || 1;
+            cropHeight = parseInt(heightInput.value) || 1;
+            cropX = parseInt(xInput.value) || 0;
+            cropY = parseInt(yInput.value) || 0;
+            
+            // Constrain values
+            cropX = Math.max(0, Math.min(cropX, imageCanvas.width - cropWidth));
+            cropY = Math.max(0, Math.min(cropY, imageCanvas.height - cropHeight));
+            cropWidth = Math.max(1, Math.min(cropWidth, imageCanvas.width - cropX));
+            cropHeight = Math.max(1, Math.min(cropHeight, imageCanvas.height - cropY));
+            
+            updateCropOverlay();
+            applyAspectRatio();
+        }
+
+        function applyAspectRatio() {
+            if (currentRatio === 'free') return;
+            
+            const ratios = {
+                '1:1': 1,
+                '16:9': 16/9,
+                '4:3': 4/3,
+                '3:2': 3/2
+            };
+            
+            const ratio = ratios[currentRatio];
+            
+            if (ratio > 1) {
+                // Width is larger
+                cropHeight = cropWidth / ratio;
+            } else {
+                // Height is larger or equal
+                cropWidth = cropHeight * ratio;
+            }
+            
+            // Ensure crop area stays within canvas bounds
+            if (cropX + cropWidth > imageCanvas.width) {
+                cropX = imageCanvas.width - cropWidth;
+            }
+            
+            if (cropY + cropHeight > imageCanvas.height) {
+                cropY = imageCanvas.height - cropHeight;
+            }
+            
+            updateInputs();
+            updateCropOverlay();
+        }
+
+        function startDragging(e) {
+            isDragging = true;
+            dragStartX = e.clientX - cropX;
+            dragStartY = e.clientY - cropY;
+            cropOverlay.style.cursor = 'grabbing';
+        }
+
+        function dragCrop(e) {
+            if (!isDragging) return;
+            
+            cropX = e.clientX - dragStartX;
+            cropY = e.clientY - dragStartY;
+            
+            // Constrain to canvas bounds
+            cropX = Math.max(0, Math.min(cropX, imageCanvas.width - cropWidth));
+            cropY = Math.max(0, Math.min(cropY, imageCanvas.height - cropHeight));
+            
+            updateCropOverlay();
+            updateInputs();
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            cropOverlay.style.cursor = 'move';
+        }
+
+        function cropImage() {
+            if (!originalImage) return;
+            
+            // Create a new canvas for the cropped image
+            const croppedCanvas = document.createElement('canvas');
+            croppedCanvas.width = cropWidth;
+            croppedCanvas.height = cropHeight;
+            const croppedCtx = croppedCanvas.getContext('2d');
+            
+            // Calculate scaling factor from original image to displayed canvas
+            const scaleX = originalImage.width / imageCanvas.width;
+            const scaleY = originalImage.height / imageCanvas.height;
+            
+            // Draw the cropped portion
+            croppedCtx.drawImage(
+                originalImage,
+                cropX * scaleX, cropY * scaleY, cropWidth * scaleX, cropHeight * scaleY,
+                0, 0, cropWidth, cropHeight
+            );
+            
+            // Display the cropped image
+            outputImage.src = croppedCanvas.toDataURL('image/png');
+            outputPreview.classList.remove('hidden');
+            downloadBtn.disabled = false;
+            
+            // Scroll to the result
+            outputPreview.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadImage() {
+            if (!outputImage.src) return;
+            
+            const link = document.createElement('a');
+            link.download = 'cropped-image.png';
+            link.href = outputImage.src;
+            link.click();
+        }
+
+        function resetTool() {
+            if (originalImage) {
+                setupCanvas();
+            } else {
+                canvasContainer.style.display = 'none';
+                outputPreview.classList.add('hidden');
+                downloadBtn.disabled = true;
+            }
+        }
+
+        // Initialize
+        resetTool();
+    </script>
+</body>
+</html>
