@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF editor tool. Edit, modify, and customize your PDF files easily with our responsive tool.">
+    <meta name="keywords" content="PDF editor, edit PDF, PDF tool, online PDF, PDF modification">
+    <title>PDF Editor Pro - Edit Your PDF Files Online</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tool-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .tool-header {
+            background: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .upload-section {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-area:hover {
+            background-color: #f0f8ff;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+
+        .edit-options {
+            padding: 1.5rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group h3 {
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .option-item:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .preview-section {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .preview-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 400px;
+            overflow: auto;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: #777;
+        }
+
+        .preview-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .ad-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        .ad-space {
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            border: 1px dashed #ddd;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .ad-space.horizontal {
+            min-height: 90px;
+        }
+
+        .features {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .features h2 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .features ul {
+            list-style: none;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-icon {
+            color: var(--success-color);
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .upload-area {
+                padding: 1.5rem;
+            }
+            
+            .preview-container {
+                height: 300px;
+            }
+        }
+
+        /* Toggle switch */
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* File input styling */
+        .file-input {
+            display: none;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">📄</span>
+                <h1>PDF Editor Pro</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Tools</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#" class="btn">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h2>Edit PDF Online</h2>
+                    <p>Upload your PDF file and customize it with our easy-to-use tools</p>
+                </div>
+
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📤</div>
+                        <h3>Drag & Drop your PDF here</h3>
+                        <p>or</p>
+                        <button class="btn" id="browseBtn">Browse Files</button>
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                    </div>
+                    <p>Your files are secure and will be deleted after processing</p>
+                </div>
+
+                <div class="edit-options">
+                    <div class="option-group">
+                        <h3>Text Editing</h3>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Edit Text</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="editText">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Font Size</span>
+                            </div>
+                            <input type="range" id="fontSize" min="8" max="72" value="12">
+                            <span id="fontSizeValue">12px</span>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Font Family</span>
+                            </div>
+                            <select id="fontFamily">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Helvetica">Helvetica</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>Page Options</h3>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Rotate Pages</span>
+                            </div>
+                            <select id="rotatePages">
+                                <option value="0">No Rotation</option>
+                                <option value="90">90° Clockwise</option>
+                                <option value="180">180°</option>
+                                <option value="270">90° Counterclockwise</option>
+                            </select>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Page Size</span>
+                            </div>
+                            <select id="pageSize">
+                                <option value="A4">A4</option>
+                                <option value="Letter">Letter</option>
+                                <option value="Legal">Legal</option>
+                                <option value="A3">A3</option>
+                            </select>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Margins</span>
+                            </div>
+                            <input type="range" id="margins" min="0" max="50" value="20">
+                            <span id="marginsValue">20mm</span>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>Security</h3>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Password Protection</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="passwordProtection">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="option-item" id="passwordField" style="display: none;">
+                            <div class="option-label">
+                                <span>Set Password</span>
+                            </div>
+                            <input type="password" id="password" placeholder="Enter password">
+                        </div>
+                        <div class="option-item">
+                            <div class="option-label">
+                                <span>Watermark</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="watermark">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h3>Preview</h3>
+                    <div class="preview-container">
+                        <div class="preview-placeholder">
+                            <div class="preview-icon">📄</div>
+                            <p>Upload a PDF to see preview</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-accent" id="downloadBtn" disabled>Download Edited PDF</button>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <div class="ad-space" id="ad1">
+                        <!-- AdSense Ad Unit 1 -->
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <div class="ad-space horizontal" id="ad2">
+                        <!-- AdSense Ad Unit 2 -->
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h2>Why Use Our PDF Editor?</h2>
+                    <ul>
+                        <li><span class="feature-icon">✓</span> No installation required</li>
+                        <li><span class="feature-icon">✓</span> Works on all devices</li>
+                        <li><span class="feature-icon">✓</span> Secure file processing</li>
+                        <li><span class="feature-icon">✓</span> Free to use</li>
+                        <li><span class="feature-icon">✓</span> Multiple editing options</li>
+                        <li><span class="feature-icon">✓</span> Fast processing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PDF Editor Pro</h3>
+                <p>Edit your PDF files online with our easy-to-use tools. No registration required.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">PDF Tools</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Tools</h3>
+                <ul>
+                    <li><a href="#">Merge PDF</a></li>
+                    <li><a href="#">Split PDF</a></li>
+                    <li><a href="#">Compress PDF</a></li>
+                    <li><a href="#">Convert PDF</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 PDF Editor Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const browseBtn = document.getElementById('browseBtn');
+        const fileInput = document.getElementById('fileInput');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const fontSize = document.getElementById('fontSize');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const margins = document.getElementById('margins');
+        const marginsValue = document.getElementById('marginsValue');
+        const passwordProtection = document.getElementById('passwordProtection');
+        const passwordField = document.getElementById('passwordField');
+
+        // Event Listeners
+        browseBtn.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f0f8ff';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+            if (e.dataTransfer.files.length) {
+                handleFileUpload(e.dataTransfer.files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+        
+        fontSize.addEventListener('input', () => {
+            fontSizeValue.textContent = `${fontSize.value}px`;
+        });
+        
+        margins.addEventListener('input', () => {
+            marginsValue.textContent = `${margins.value}mm`;
+        });
+        
+        passwordProtection.addEventListener('change', () => {
+            passwordField.style.display = passwordProtection.checked ? 'flex' : 'none';
+        });
+        
+        downloadBtn.addEventListener('click', () => {
+            // Simulate download process
+            downloadBtn.innerHTML = '<span class="loading"></span> Processing...';
+            downloadBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Your edited PDF is ready for download! This is a demo. In a real application, the file would download automatically.');
+                downloadBtn.innerHTML = 'Download Edited PDF';
+                downloadBtn.disabled = false;
+            }, 2000);
+        });
+
+        // Functions
+        function handleFileUpload(file) {
+            if (file.type !== 'application/pdf') {
+                alert('Please upload a PDF file.');
+                return;
+            }
+            
+            // Simulate file processing
+            uploadArea.innerHTML = '<div class="upload-icon">⏳</div><h3>Processing PDF...</h3>';
+            
+            setTimeout(() => {
+                uploadArea.innerHTML = `
+                    <div class="upload-icon">✅</div>
+                    <h3>${file.name}</h3>
+                    <p>File uploaded successfully!</p>
+                `;
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+                
+                // Update preview
+                document.querySelector('.preview-placeholder').innerHTML = `
+                    <div class="preview-icon">📄</div>
+                    <h3>${file.name}</h3>
+                    <p>PDF preview would appear here in a real application</p>
+                    <p><small>File size: ${(file.size / 1024).toFixed(2)} KB</small></p>
+                `;
+            }, 1500);
+        }
+
+        // Initialize tooltips and other UI enhancements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add subtle animation to features list
+            const features = document.querySelectorAll('.features li');
+            features.forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    feature.style.transition = 'opacity 0.5s, transform 0.5s';
+                    feature.style.opacity = '1';
+                    feature.style.transform = 'translateX(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
