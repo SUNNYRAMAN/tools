@@ -200,11 +200,22 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            cursor: pointer;
         }
 
         .tool-card:hover {
             transform: translateY(-5px); /* Reduced hover effect */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-card-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .tool-icon {
@@ -215,6 +226,8 @@
             justify-content: center;
             font-size: 2rem; /* Smaller icon */
             color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .tool-content {
@@ -222,6 +235,8 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
+            z-index: 2;
         }
 
         .tool-content h3 {
@@ -245,6 +260,8 @@
             text-decoration: none;
             transition: var(--transition);
             font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
         }
 
         .tool-link:hover {
@@ -517,6 +534,7 @@
         <div class="tools-grid">
             <!-- Image Tools -->
             <div class="tool-card">
+                <a href="/tools/merge-pdf.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -528,6 +546,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/split-pdf.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -539,6 +558,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-powerpoint-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -550,6 +570,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-to-excel-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -561,6 +582,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/word-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -572,6 +594,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/powerpoint-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -583,6 +606,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/excel-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -594,6 +618,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/edit-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -605,6 +630,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-to-jpg-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -616,6 +642,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/jpg-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -627,6 +654,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/sign-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -638,17 +666,19 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/watermark-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
                 <div class="tool-content">
                     <h3>Watermark PDF</h3>
-                    <p>Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position..</p>
+                    <p>Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.</p>
                     <a href="/tools/watermark-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="tool-card">
+                <a href="/tools/rotate-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -660,6 +690,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/html-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -671,6 +702,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/unlock-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -682,6 +714,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-organize-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -693,6 +726,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-repair-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -704,6 +738,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/page-numbers.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -715,6 +750,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/scan-to-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -726,6 +762,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/ocr-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -737,6 +774,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/pdf-comparison-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -748,6 +786,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/redact-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -759,6 +798,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/crop-pdf-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -770,6 +810,7 @@
             </div>
 
             <div class="tool-card">
+                <a href="/tools/crop-img-tool.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -781,6 +822,7 @@
             </div>
             
             <div class="tool-card">
+                <a href="/tools/img-compress.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-compress-arrows-alt"></i>
                 </div>
@@ -792,6 +834,7 @@
             </div>
             
             <div class="tool-card">
+                <a href="/tools/img-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-file-image"></i>
                 </div>
@@ -803,6 +846,7 @@
             </div>
             
             <div class="tool-card">
+                <a href="/tools/img-resizer.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-crop-alt"></i>
                 </div>
@@ -815,6 +859,7 @@
             
             <!-- PDF Tools -->
             <div class="tool-card">
+                <a href="/tools/pdf-compressor.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-file-pdf"></i>
                 </div>
@@ -826,6 +871,7 @@
             </div>
             
             <div class="tool-card">
+                <a href="/tools/pdf-word-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-exchange-alt"></i>
                 </div>
@@ -837,6 +883,7 @@
             </div>
             
             <div class="tool-card">
+                <a href="/tools/pdf-protector.html" class="tool-card-link"></a>
                 <div class="tool-icon">
                     <i class="fas fa-lock"></i>
                 </div>
