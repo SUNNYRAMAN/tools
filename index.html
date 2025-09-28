@@ -212,13 +212,12 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
-        .tool-card-link {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .tool-card a {
+            display: block;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            text-decoration: none;
+            color: inherit;
         }
 
         .tool-icon {
@@ -229,8 +228,6 @@
             justify-content: center;
             font-size: 2.5rem;
             color: white;
-            position: relative;
-            z-index: 2;
         }
 
         .tool-content {
@@ -238,8 +235,6 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            position: relative;
-            z-index: 2;
         }
 
         .tool-content h3 {
@@ -264,8 +259,6 @@
             text-decoration: none;
             transition: var(--transition);
             font-size: 0.95rem;
-            position: relative;
-            z-index: 2;
         }
 
         .tool-link:hover {
@@ -536,367 +529,397 @@
         <div class="tools-grid">
             <!-- Row 1 -->
             <div class="tool-card">
-                <a href="/tools/merge-pdf.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-object-group"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Merge PDF</h3>
-                    <p>Combine PDFs in the order you want with the easiest PDF merger available.</p>
-                    <a href="/tools/merge-pdf.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/merge-pdf.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Merge PDF</h3>
+                        <p>Combine PDFs in the order you want with the easiest PDF merger available.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/split-pdf.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-cut"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Split PDF</h3>
-                    <p>Separate one page or a whole set for easy conversion into independent PDF files.</p>
-                    <a href="/tools/split-pdf.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/split-pdf.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Split PDF</h3>
+                        <p>Separate one page or a whole set for easy conversion into independent PDF files.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-powerpoint-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-powerpoint"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF to PowerPoint</h3>
-                    <p>Turn your PDF files into easy to edit PPT and PPTX slideshows.</p>
-                    <a href="/tools/pdf-powerpoint-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-powerpoint-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF to PowerPoint</h3>
+                        <p>Turn your PDF files into easy to edit PPT and PPTX slideshows.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-to-excel-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-excel"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF to Excel</h3>
-                    <p>Pull data straight from PDFs into Excel spreadsheets in a few short seconds.</p>
-                    <a href="/tools/pdf-to-excel-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-to-excel-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF to Excel</h3>
+                        <p>Pull data straight from PDFs into Excel spreadsheets in a few short seconds.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/word-to-pdf-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-word"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Word to PDF</h3>
-                    <p>Make DOC and DOCX files easy to read by converting them to PDF.</p>
-                    <a href="/tools/word-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/word-to-pdf-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Word to PDF</h3>
+                        <p>Make DOC and DOCX files easy to read by converting them to PDF.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/powerpoint-to-pdf-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-powerpoint"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PowerPoint to PDF</h3>
-                    <p>Make PPT and PPTX slideshows easy to view by converting them to PDF.</p>
-                    <a href="/tools/powerpoint-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/powerpoint-to-pdf-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PowerPoint to PDF</h3>
+                        <p>Make PPT and PPTX slideshows easy to view by converting them to PDF.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <!-- Row 2 -->
             <div class="tool-card">
-                <a href="/tools/excel-to-pdf-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-excel"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Excel to PDF</h3>
-                    <p>Make EXCEL spreadsheets easy to read by converting them to PDF.</p>
-                    <a href="/tools/excel-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/excel-to-pdf-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Excel to PDF</h3>
+                        <p>Make EXCEL spreadsheets easy to read by converting them to PDF.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/edit-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-edit"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Edit PDF</h3>
-                    <p>Add text, images, shapes or freehand annotations to a PDF document.</p>
-                    <a href="/tools/edit-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/edit-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Edit PDF</h3>
+                        <p>Add text, images, shapes or freehand annotations to a PDF document.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-to-jpg-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-image"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF to JPG</h3>
-                    <p>Convert each PDF page into a JPG or extract all images contained in a PDF.</p>
-                    <a href="/tools/pdf-to-jpg-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-to-jpg-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF to JPG</h3>
+                        <p>Convert each PDF page into a JPG or extract all images contained in a PDF.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/jpg-to-pdf-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>JPG to PDF</h3>
-                    <p>Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
-                    <a href="/tools/jpg-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/jpg-to-pdf-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>JPG to PDF</h3>
+                        <p>Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/sign-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-signature"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Sign PDF</h3>
-                    <p>Sign yourself or request electronic signatures from others.</p>
-                    <a href="/tools/sign-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/sign-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-signature"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Sign PDF</h3>
+                        <p>Sign yourself or request electronic signatures from others.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/watermark-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-tint"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Watermark PDF</h3>
-                    <p>Stamp an image or text over your PDF in seconds.</p>
-                    <a href="/tools/watermark-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/watermark-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Watermark PDF</h3>
+                        <p>Stamp an image or text over your PDF in seconds.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <!-- Row 3 -->
             <div class="tool-card">
-                <a href="/tools/rotate-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-redo"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Rotate PDF</h3>
-                    <p>Rotate your PDFs the way you need them.</p>
-                    <a href="/tools/rotate-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/rotate-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Rotate PDF</h3>
+                        <p>Rotate your PDFs the way you need them.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/html-to-pdf-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fab fa-html5"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>HTML to PDF</h3>
-                    <p>Convert webpages in HTML to PDF with a click.</p>
-                    <a href="/tools/html-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/html-to-pdf-converter.html">
+                    <div class="tool-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>HTML to PDF</h3>
+                        <p>Convert webpages in HTML to PDF with a click.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/unlock-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-unlock"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Unlock PDF</h3>
-                    <p>Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
-                    <a href="/tools/unlock-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/unlock-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-unlock"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Unlock PDF</h3>
+                        <p>Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-organize-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-sort"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Organize PDF</h3>
-                    <p>Sort pages of your PDF file however you like.</p>
-                    <a href="/tools/pdf-organize-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-organize-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-sort"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Organize PDF</h3>
+                        <p>Sort pages of your PDF file however you like.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-repair-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Repair PDF</h3>
-                    <p>Repair a damaged PDF and recover data from corrupt PDF.</p>
-                    <a href="/tools/pdf-repair-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-repair-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Repair PDF</h3>
+                        <p>Repair a damaged PDF and recover data from corrupt PDF.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/page-numbers.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-list-ol"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Page Number</h3>
-                    <p>Add page numbers into PDFs with ease.</p>
-                    <a href="/tools/page-numbers.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/page-numbers.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Page Number</h3>
+                        <p>Add page numbers into PDFs with ease.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <!-- Row 4 -->
             <div class="tool-card">
-                <a href="/tools/scan-to-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-scanner"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Scan to PDF</h3>
-                    <p>Capture document scans from your mobile device.</p>
-                    <a href="/tools/scan-to-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/scan-to-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-scanner"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Scan to PDF</h3>
+                        <p>Capture document scans from your mobile device.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/ocr-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-eye"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>OCR PDF</h3>
-                    <p>Easily convert scanned PDF into searchable documents.</p>
-                    <a href="/tools/ocr-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/ocr-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>OCR PDF</h3>
+                        <p>Easily convert scanned PDF into searchable documents.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-comparison-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-code-compare"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Compare PDF</h3>
-                    <p>Show a side-by-side document comparison.</p>
-                    <a href="/tools/pdf-comparison-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-comparison-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-code-compare"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Compare PDF</h3>
+                        <p>Show a side-by-side document comparison.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/redact-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-eye-slash"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Redact PDF</h3>
-                    <p>Redact text and graphics to remove sensitive information.</p>
-                    <a href="/tools/redact-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/redact-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Redact PDF</h3>
+                        <p>Redact text and graphics to remove sensitive information.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/crop-pdf-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-crop"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Crop PDF</h3>
-                    <p>Crop margins of PDF documents or select specific areas.</p>
-                    <a href="/tools/crop-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/crop-pdf-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-crop"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Crop PDF</h3>
+                        <p>Crop margins of PDF documents or select specific areas.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/crop-img-tool.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-crop-alt"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Crop Image</h3>
-                    <p>Crop JPG, PNG, or GIFs with ease.</p>
-                    <a href="/tools/crop-img-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/crop-img-tool.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-crop-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Crop Image</h3>
+                        <p>Crop JPG, PNG, or GIFs with ease.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <!-- Row 5 -->
             <div class="tool-card">
-                <a href="/tools/img-compress.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-compress"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Image Compressor</h3>
-                    <p>Reduce image file size without losing quality.</p>
-                    <a href="/tools/img-compress.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/img-compress.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-compress"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Image Compressor</h3>
+                        <p>Reduce image file size without losing quality.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/img-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-exchange-alt"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Image Converter</h3>
-                    <p>Convert between JPG, PNG, WebP, and other popular image formats.</p>
-                    <a href="/tools/img-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/img-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Image Converter</h3>
+                        <p>Convert between JPG, PNG, WebP, and other popular image formats.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/img-resizer.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-expand-alt"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Image Resizer</h3>
-                    <p>Resize your images to exact dimensions while maintaining aspect ratio.</p>
-                    <a href="/tools/img-resizer.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/img-resizer.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Image Resizer</h3>
+                        <p>Resize your images to exact dimensions while maintaining aspect ratio.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-compressor.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF Compressor</h3>
-                    <p>Reduce PDF file size for easier sharing and storage.</p>
-                    <a href="/tools/pdf-compressor.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-compressor.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF Compressor</h3>
+                        <p>Reduce PDF file size for easier sharing and storage.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-word-converter.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-file-word"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF to Word</h3>
-                    <p>Convert PDF documents to editable Word files with high accuracy.</p>
-                    <a href="/tools/pdf-word-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-word-converter.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF to Word</h3>
+                        <p>Convert PDF documents to editable Word files with high accuracy.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
 
             <div class="tool-card">
-                <a href="/tools/pdf-protector.html" class="tool-card-link"></a>
-                <div class="tool-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>PDF Protector</h3>
-                    <p>Add password protection and permissions to your PDF files.</p>
-                    <a href="/tools/pdf-protector.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <a href="/tools/pdf-protector.html">
+                    <div class="tool-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>PDF Protector</h3>
+                        <p>Add password protection and permissions to your PDF files.</p>
+                        <span class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
