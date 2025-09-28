@@ -63,6 +63,7 @@
             gap: 10px;
             font-size: 1.8rem;
             font-weight: 700;
+            margin-right: auto; /* This pushes everything else to the right */
         }
 
         .logo i {
@@ -91,6 +92,7 @@
         .auth-buttons {
             display: flex;
             gap: 1rem;
+            margin-left: auto; /* This ensures buttons stay on the right */
         }
 
         .btn {
@@ -186,8 +188,8 @@
         /* Updated Tools Grid */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* 6 columns for large screens */
-            gap: 1rem; /* Reduced gap */
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
             padding: 2rem 0;
         }
 
@@ -205,7 +207,7 @@
         }
 
         .tool-card:hover {
-            transform: translateY(-5px); /* Reduced hover effect */
+            transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
@@ -220,18 +222,18 @@
 
         .tool-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            height: 80px; /* Reduced height */
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem; /* Smaller icon */
+            font-size: 2rem;
             color: white;
             position: relative;
             z-index: 2;
         }
 
         .tool-content {
-            padding: 1rem; /* Reduced padding */
+            padding: 1rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -242,14 +244,14 @@
         .tool-content h3 {
             margin-bottom: 0.5rem;
             color: var(--dark);
-            font-size: 1rem; /* Smaller font */
+            font-size: 1rem;
         }
 
         .tool-content p {
             color: var(--gray);
             margin-bottom: 1rem;
             flex-grow: 1;
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
         }
 
         .tool-link {
@@ -387,13 +389,13 @@
         /* Responsive Styles */
         @media (max-width: 1400px) {
             .tools-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 columns for medium-large screens */
+                grid-template-columns: repeat(5, 1fr);
             }
         }
 
         @media (max-width: 1200px) {
             .tools-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns for medium screens */
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -403,7 +405,7 @@
             }
             
             .tools-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 columns for tablets */
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -452,7 +454,7 @@
             }
             
             .tools-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile landscape */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -474,7 +476,7 @@
             }
             
             .tools-grid {
-                grid-template-columns: 1fr; /* 1 column for mobile portrait */
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -489,6 +491,535 @@
                     <span>EditInSeconds</span>
                 </div>
                 
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="/tools/merge-pdf.html">Merge PDF</a></li>
+                        <li><a href="/tools/split-pdf.html">Split PDF</a></li>
+                        <li><a href="/tools/pdf-compressor.html">Compress PDF</a></li>
+                        <li><a href="/tools/jpg-to-pdf-converter.html">JPG to PDF</a></li>
+                        <li><a href="/tools/pdf-to-jpg-converter.html">PDF to JPG</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <a href="/tools/unlock-pdf-tool.html" class="btn btn-outline">Unlock PDF</a>
+                    <a href="/tools/pdf-repair-tool.html" class="btn btn-primary">Repair PDF</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>All Your Image & PDF Tools in One Place</h1>
+            <p>EditInSeconds offers a comprehensive suite of Free online tools to edit,<br> 
+               convert, compress, and optimize your images and PDF documents. Fast, secure, <br>
+                 and completely FREE to use.</p>
+        </div>
+    </section>
+
+    <!-- Popular Tools Section -->
+    <section class="container">
+        <div class="section-title">
+            <h2>Popular Tools</h2>
+            <p>Discover our most frequently used tools for image and PDF processing</p>
+        </div>
+        
+        <div class="tools-grid">
+            <!-- Image Tools -->
+            <div class="tool-card">
+                <a href="/tools/merge-pdf.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-object-group"></i>
+                </div>
+
+                <div class="tool-content">
+                    <h3>Merge PDF</h3>
+                    <p>Combine PDFs in the order you want with the easiest PDF merger available.</p>
+                    <a href="/tools/merge-pdf.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/split-pdf.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Split PDF</h3>
+                    <p>Separate one page or a whole set for easy conversion into independent PDF files.</p>
+                    <a href="/tools/split-pdf.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-powerpoint-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-powerpoint"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF to PowerPoint</h3>
+                    <p>Turn your PDF files into easy to edit PPT and PPTX slideshows.</p>
+                    <a href="/tools/pdf-powerpoint-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-to-excel-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF to Excel</h3>
+                    <p>Pull data straight from PDFs into Excel spreadsheets in a few short seconds.</p>
+                    <a href="/tools/pdf-to-excel-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/word-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-word"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Word to PDF</h3>
+                    <p>Make DOC and DOCX files easy to read by converting them to PDF.</p>
+                    <a href="/tools/word-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/powerpoint-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-powerpoint"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PowerPoint to PDF</h3>
+                    <p>Make PPT and PPTX slideshows easy to view by converting them to PDF.</p>
+                    <a href="/tools/powerpoint-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/excel-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Excel to PDF</h3>
+                    <p>Make EXCEL spreadsheets easy to read by converting them to PDF.</p>
+                    <a href="/tools/excel-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/edit-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Edit PDF</h3>
+                    <p>Add text, images, shapes or freehand annotations to a PDF document.</p>
+                    <a href="/tools/edit-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-to-jpg-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-image"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF to JPG</h3>
+                    <p>Convert each PDF page into a JPG or extract all images contained in a PDF.</p>
+                    <a href="/tools/pdf-to-jpg-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/jpg-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>JPG to PDF</h3>
+                    <p>Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
+                    <a href="/tools/jpg-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/sign-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-signature"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Sign PDF</h3>
+                    <p>Sign yourself or request electronic signatures from others.</p>
+                    <a href="/tools/sign-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/watermark-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Watermark PDF</h3>
+                    <p>Stamp an image or text over your PDF in seconds.</p>
+                    <a href="/tools/watermark-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/rotate-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Rotate PDF</h3>
+                    <p>Rotate your PDFs the way you need them.</p>
+                    <a href="/tools/rotate-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/html-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>HTML to PDF</h3>
+                    <p>Convert webpages in HTML to PDF with a click.</p>
+                    <a href="/tools/html-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/unlock-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-unlock"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Unlock PDF</h3>
+                    <p>Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
+                    <a href="/tools/unlock-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-organize-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-sort"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Organize PDF</h3>
+                    <p>Sort pages of your PDF file however you like.</p>
+                    <a href="/tools/pdf-organize-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-repair-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Repair PDF</h3>
+                    <p>Repair a damaged PDF and recover data from corrupt PDF.</p>
+                    <a href="/tools/pdf-repair-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/page-numbers.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-list-ol"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Page Number</h3>
+                    <p>Add page numbers into PDFs with ease.</p>
+                    <a href="/tools/page-numbers.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/scan-to-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-scanner"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Scan to PDF</h3>
+                    <p>Capture document scans from your mobile device.</p>
+                    <a href="/tools/scan-to-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/ocr-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>OCR PDF</h3>
+                    <p>Easily convert scanned PDF into searchable documents.</p>
+                    <a href="/tools/ocr-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-comparison-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-code-compare"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Compare PDF</h3>
+                    <p>Show a side-by-side document comparison.</p>
+                    <a href="/tools/pdf-comparison-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/redact-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-eye-slash"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Redact PDF</h3>
+                    <p>Redact text and graphics to remove sensitive information.</p>
+                    <a href="/tools/redact-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/crop-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-crop"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Crop PDF</h3>
+                    <p>Crop margins of PDF documents or select specific areas.</p>
+                    <a href="/tools/crop-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/crop-img-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-crop-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Crop Image</h3>
+                    <p>Crop JPG, PNG, or GIFs with ease.</p>
+                    <a href="/tools/crop-img-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/img-compress.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-compress"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Compressor</h3>
+                    <p>Reduce image file size without losing quality.</p>
+                    <a href="/tools/img-compress.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/img-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Converter</h3>
+                    <p>Convert between JPG, PNG, WebP, and other popular image formats.</p>
+                    <a href="/tools/img-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/img-resizer.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-expand-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Resizer</h3>
+                    <p>Resize your images to exact dimensions while maintaining aspect ratio.</p>
+                    <a href="/tools/img-resizer.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- PDF Tools -->
+            <div class="tool-card">
+                <a href="/tools/pdf-compressor.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF Compressor</h3>
+                    <p>Reduce PDF file size for easier sharing and storage.</p>
+                    <a href="/tools/pdf-compressor.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-word-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-word"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF documents to editable Word files with high accuracy.</p>
+                    <a href="/tools/pdf-word-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-protector.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF Protector</h3>
+                    <p>Add password protection and permissions to your PDF files.</p>
+                    <a href="/tools/pdf-protector.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose EditInSeconds?</h2>
+                <p>We provide the best tools with user experience in mind</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Our tools process files quickly using advanced algorithms and cloud technology.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your files are processed securely and deleted automatically after processing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access all tools from any device with our responsive design.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>No Limits</h3>
+                    <p>Process unlimited files without watermarks or usage restrictions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Optimize Your Workflow?</h2>
+            <p>Join thousands of users who rely on EditInSeconds for their image and PDF processing needs.</p>
+            <a href="#" class="btn btn-primary" style="background: white; color: var(--primary);">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EditInSeconds</h3>
+                    <p>Your all-in-one solution for image and PDF tools. Fast, secure, and easy to use.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Image Tools</h3>
+                    <ul>
+                        <li><a href="/tools/img-compress.html">Compress Image</a></li>
+                        <li><a href="/tools/img-resizer.html">Resize Image</a></li>
+                        <li><a href="/tools/img-converter.html">Convert Image</a></li>
+                        <li><a href="/tools/watermark-tool.html">Watermark</a></li>
+                        <li><a href="/tools/crop-img-tool.html">Crop Image</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>PDF Tools</h3>
+                    <ul>
+                        <li><a href="/tools/pdf-compressor.html">Compress PDF</a></li>
+                        <li><a href="/tools/merge-pdf.html">Merge PDF</a></li>
+                        <li><a href="/tools/split-pdf.html">Split PDF</a></li>
+                        <li><a href="/tools/pdf-word-converter.html">PDF to Word</a></li>
+                        <li><a href="/tools/pdf-protector.html">Protect PDF</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>PDF Security</h3>
+                    <ul>
+                        <li><a href="/tools/unlock-pdf-tool.html">Unlock PDF</a></li>
+                        <li><a href="/tools/pdf-protector.html">Protect PDF</a></li>
+                        <li><a href="/tools/sign-pdf-tool.html">Sign PDF</a></li>
+                        <li><a href="/tools/redact-pdf-tool.html">Redact PDF</a></li>
+                        <li><a href="/tools/pdf-comparison-tool.html">Compare PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 EditInSeconds. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('mainNav');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+
+            if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>                
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
