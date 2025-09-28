@@ -35,9 +35,9 @@
 
         .container {
             width: 100%;
-            max-width: 1400px; /* Increased max-width for more space */
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 30px; /* Increased side padding */
+            padding: 0 20px;
         }
 
         /* Header Styles */
@@ -185,11 +185,11 @@
             margin: 0 auto;
         }
 
-        /* Updated Tools Grid - 4 columns with large gaps */
+        /* Tools Grid - 6 columns with minimal side gaps */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns */
-            gap: 30px; /* Large gap between items */
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
             padding: 2rem 0;
             width: 100%;
         }
@@ -223,18 +223,18 @@
 
         .tool-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            height: 120px; /* Increased height */
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem; /* Larger icon */
+            font-size: 2.5rem;
             color: white;
             position: relative;
             z-index: 2;
         }
 
         .tool-content {
-            padding: 1.8rem; /* Increased padding */
+            padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -243,17 +243,17 @@
         }
 
         .tool-content h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: var(--dark);
-            font-size: 1.3rem; /* Larger font */
+            font-size: 1.1rem;
         }
 
         .tool-content p {
             color: var(--gray);
             margin-bottom: 1.5rem;
             flex-grow: 1;
-            font-size: 1rem; /* Larger font */
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .tool-link {
@@ -263,7 +263,7 @@
             font-weight: 600;
             text-decoration: none;
             transition: var(--transition);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             position: relative;
             z-index: 2;
         }
@@ -392,14 +392,13 @@
         /* Responsive Styles */
         @media (max-width: 1400px) {
             .tools-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(5, 1fr);
             }
         }
 
         @media (max-width: 1200px) {
             .tools-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 25px;
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -409,12 +408,7 @@
             }
             
             .tools-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .container {
-                padding: 0 20px;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -464,7 +458,6 @@
             
             .tools-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
             }
         }
 
@@ -487,11 +480,6 @@
             
             .tools-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .container {
-                padding: 0 15px;
             }
         }
     </style>
@@ -546,7 +534,7 @@
         </div>
         
         <div class="tools-grid">
-            <!-- First row of tools -->
+            <!-- Row 1 -->
             <div class="tool-card">
                 <a href="/tools/merge-pdf.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -595,7 +583,6 @@
                 </div>
             </div>
 
-            <!-- Second row of tools -->
             <div class="tool-card">
                 <a href="/tools/word-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -620,6 +607,7 @@
                 </div>
             </div>
 
+            <!-- Row 2 -->
             <div class="tool-card">
                 <a href="/tools/excel-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -644,7 +632,6 @@
                 </div>
             </div>
 
-            <!-- Third row of tools -->
             <div class="tool-card">
                 <a href="/tools/pdf-to-jpg-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -690,6 +677,225 @@
                     <h3>Watermark PDF</h3>
                     <p>Stamp an image or text over your PDF in seconds.</p>
                     <a href="/tools/watermark-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="tool-card">
+                <a href="/tools/rotate-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Rotate PDF</h3>
+                    <p>Rotate your PDFs the way you need them.</p>
+                    <a href="/tools/rotate-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/html-to-pdf-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>HTML to PDF</h3>
+                    <p>Convert webpages in HTML to PDF with a click.</p>
+                    <a href="/tools/html-to-pdf-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/unlock-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-unlock"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Unlock PDF</h3>
+                    <p>Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
+                    <a href="/tools/unlock-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-organize-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-sort"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Organize PDF</h3>
+                    <p>Sort pages of your PDF file however you like.</p>
+                    <a href="/tools/pdf-organize-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-repair-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Repair PDF</h3>
+                    <p>Repair a damaged PDF and recover data from corrupt PDF.</p>
+                    <a href="/tools/pdf-repair-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/page-numbers.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-list-ol"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Page Number</h3>
+                    <p>Add page numbers into PDFs with ease.</p>
+                    <a href="/tools/page-numbers.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="tool-card">
+                <a href="/tools/scan-to-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-scanner"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Scan to PDF</h3>
+                    <p>Capture document scans from your mobile device.</p>
+                    <a href="/tools/scan-to-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/ocr-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>OCR PDF</h3>
+                    <p>Easily convert scanned PDF into searchable documents.</p>
+                    <a href="/tools/ocr-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-comparison-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-code-compare"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Compare PDF</h3>
+                    <p>Show a side-by-side document comparison.</p>
+                    <a href="/tools/pdf-comparison-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/redact-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-eye-slash"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Redact PDF</h3>
+                    <p>Redact text and graphics to remove sensitive information.</p>
+                    <a href="/tools/redact-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/crop-pdf-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-crop"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Crop PDF</h3>
+                    <p>Crop margins of PDF documents or select specific areas.</p>
+                    <a href="/tools/crop-pdf-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/crop-img-tool.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-crop-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Crop Image</h3>
+                    <p>Crop JPG, PNG, or GIFs with ease.</p>
+                    <a href="/tools/crop-img-tool.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="tool-card">
+                <a href="/tools/img-compress.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-compress"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Compressor</h3>
+                    <p>Reduce image file size without losing quality.</p>
+                    <a href="/tools/img-compress.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/img-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Converter</h3>
+                    <p>Convert between JPG, PNG, WebP, and other popular image formats.</p>
+                    <a href="/tools/img-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/img-resizer.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-expand-alt"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Image Resizer</h3>
+                    <p>Resize your images to exact dimensions while maintaining aspect ratio.</p>
+                    <a href="/tools/img-resizer.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-compressor.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF Compressor</h3>
+                    <p>Reduce PDF file size for easier sharing and storage.</p>
+                    <a href="/tools/pdf-compressor.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-word-converter.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-file-word"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF documents to editable Word files with high accuracy.</p>
+                    <a href="/tools/pdf-word-converter.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-protector.html" class="tool-card-link"></a>
+                <div class="tool-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>PDF Protector</h3>
+                    <p>Add password protection and permissions to your PDF files.</p>
+                    <a href="/tools/pdf-protector.html" class="tool-link">Use Tool <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
