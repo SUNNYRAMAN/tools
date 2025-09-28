@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/WebApplication">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EditInSeconds - Your All-in-One Image & PDF Solution</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>EditInSeconds - Free Online PDF Editor & Image Tools | All-in-One Solution</title>
+    <meta name="description" content="EditInSeconds offers 30+ FREE online tools for PDF editing, conversion, compression, and image processing. Merge, split, convert PDFs and images instantly. No registration required.">
+    <meta name="keywords" content="pdf editor, merge pdf, split pdf, compress pdf, jpg to pdf, pdf to jpg, image converter, pdf tools, online pdf editor, free pdf tools">
+    <meta name="author" content="EditInSeconds">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EditInSeconds",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "description": "Free online PDF and image editing tools",
+      "url": "https://www.editinseconds.com",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "EditInSeconds"
+      }
+    }
+    </script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.editinseconds.com/">
+    <meta property="og:title" content="EditInSeconds - Free Online PDF Editor & Image Tools">
+    <meta property="og:description" content="30+ FREE online tools for PDF editing, conversion, compression, and image processing. No registration required.">
+    <meta property="og:image" content="https://www.editinseconds.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.editinseconds.com/">
+    <meta property="twitter:title" content="EditInSeconds - Free Online PDF Editor & Image Tools">
+    <meta property="twitter:description" content="30+ FREE online tools for PDF editing, conversion, compression, and image processing.">
+    <meta property="twitter:image" content="https://www.editinseconds.com/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.editinseconds.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
+    
     <style>
         :root {
             --primary: #4361ee;
@@ -24,13 +86,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
             background-color: #f5f7ff;
             color: var(--dark);
             line-height: 1.6;
+            font-size: 16px;
         }
 
         .container {
@@ -151,6 +214,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            line-height: 1.2;
         }
 
         .hero p {
@@ -165,6 +229,36 @@
             justify-content: center;
             gap: 1rem;
             margin-top: 2rem;
+        }
+
+        /* Ad Units */
+        .ad-unit {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px dashed #dee2e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90px;
+        }
+
+        .ad-unit.horizontal {
+            width: 100%;
+        }
+
+        .ad-unit.vertical {
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            margin-bottom: 5px;
         }
 
         /* Tools Section */
@@ -296,6 +390,22 @@
             color: white;
         }
 
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
         /* CTA Section */
         .cta {
             padding: 5rem 0;
@@ -313,6 +423,38 @@
             max-width: 600px;
             margin: 0 auto 2rem;
             font-size: 1.1rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
         }
 
         /* Footer */
@@ -452,6 +594,10 @@
             .tools-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .ad-unit.vertical {
+                width: 100%;
+            }
         }
 
         @media (max-width: 576px) {
@@ -487,7 +633,7 @@
                     <span>EditInSeconds</span>
                 </div>
                 
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
                     <i class="fas fa-bars"></i>
                 </button>
                 
@@ -509,6 +655,13 @@
         </div>
     </header>
 
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> > All Tools
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -516,11 +669,31 @@
             <p>EditInSeconds offers a comprehensive suite of Free online tools to edit,<br> 
                convert, compress, and optimize your images and PDF documents. Fast, secure, <br>
                  and completely FREE to use.</p>
+            <div class="hero-buttons">
+                <a href="#tools" class="btn btn-primary">Explore All Tools</a>
+                <a href="#features" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary);">Learn More</a>
+            </div>
         </div>
     </section>
 
+    <!-- Ad Unit - Leaderboard -->
+    <div class="container">
+        <div class="ad-unit horizontal">
+            <!-- AdSense Leaderboard Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_CLIENT_ID"
+                 data-ad-slot="YOUR_LEADERBOARD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
     <!-- Popular Tools Section -->
-    <section class="container">
+    <section class="container" id="tools">
         <div class="section-title">
             <h2>Popular Tools</h2>
             <p>Discover our most frequently used tools for image and PDF processing</p>
@@ -924,8 +1097,24 @@
         </div>
     </section>
 
+    <!-- Ad Unit - Medium Rectangle -->
+    <div class="container">
+        <div class="ad-unit horizontal">
+            <!-- AdSense Medium Rectangle Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_AD_CLIENT_ID"
+                 data-ad-slot="YOUR_MEDIUM_RECTANGLE_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
     <!-- Features Section -->
-    <section class="features">
+    <section class="features" id="features">
         <div class="container">
             <div class="section-title">
                 <h2>Why Choose EditInSeconds?</h2>
@@ -968,12 +1157,64 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our tools</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is EditInSeconds really free to use?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our tools are completely free to use. There are no hidden fees, watermarks, or usage limits. We believe in providing accessible tools for everyone.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Are my files secure when using your tools?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. We prioritize your privacy and security. All file processing happens securely, and we automatically delete your files from our servers after processing is complete.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What file formats do you support?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support a wide range of formats including PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, JPG, PNG, GIF, WebP, and more. Our tools are continuously updated to support additional formats.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I need to create an account to use your tools?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No account is required! You can use all our tools immediately without any registration. We believe in providing instant access to our services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
             <h2>Ready to Optimize Your Workflow?</h2>
             <p>Join thousands of users who rely on EditInSeconds for their image and PDF processing needs.</p>
-            <a href="#" class="btn btn-primary" style="background: white; color: var(--primary);">Get Started Now</a>
+            <a href="#tools" class="btn btn-primary" style="background: white; color: var(--primary);">Get Started Now</a>
         </div>
     </section>
 
@@ -985,8 +1226,10 @@
                     <h3>EditInSeconds</h3>
                     <p>Your all-in-one solution for image and PDF tools. Fast, secure, and easy to use.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -1022,6 +1265,17 @@
                         <li><a href="/tools/pdf-comparison-tool.html">Compare PDF</a></li>
                     </ul>
                 </div>
+
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="copyright">
@@ -1044,6 +1298,45 @@
             if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
                 nav.classList.remove('active');
             }
+        });
+
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Lazy load images
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            }
+        });
+
+        // Track tool clicks for analytics
+        document.querySelectorAll('.tool-card a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // You can integrate with Google Analytics here
+                console.log('Tool clicked:', this.href);
+                // Example: gtag('event', 'tool_click', { 'tool_name': this.querySelector('h3').textContent });
+            });
         });
     </script>
 </body>
