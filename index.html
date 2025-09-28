@@ -35,9 +35,9 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px; /* Increased max-width for more space */
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 30px; /* Increased side padding */
         }
 
         /* Header Styles */
@@ -185,11 +185,11 @@
             margin: 0 auto;
         }
 
-        /* Updated Tools Grid - 6 columns with no gaps on sides */
+        /* Updated Tools Grid - 4 columns with large gaps */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 0; /* No gap between items */
+            grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns */
+            gap: 30px; /* Large gap between items */
             padding: 2rem 0;
             width: 100%;
         }
@@ -205,13 +205,11 @@
             flex-direction: column;
             position: relative;
             cursor: pointer;
-            margin: 0; /* Remove any margin */
-            border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border for separation */
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .tool-card-link {
@@ -225,18 +223,18 @@
 
         .tool-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            height: 100px; /* Increased height */
+            height: 120px; /* Increased height */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem; /* Larger icon */
+            font-size: 3rem; /* Larger icon */
             color: white;
             position: relative;
             z-index: 2;
         }
 
         .tool-content {
-            padding: 1.5rem; /* Increased padding */
+            padding: 1.8rem; /* Increased padding */
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -245,17 +243,17 @@
         }
 
         .tool-content h3 {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             color: var(--dark);
-            font-size: 1.2rem; /* Larger font */
+            font-size: 1.3rem; /* Larger font */
         }
 
         .tool-content p {
             color: var(--gray);
             margin-bottom: 1.5rem;
             flex-grow: 1;
-            font-size: 0.95rem; /* Slightly larger font */
-            line-height: 1.5;
+            font-size: 1rem; /* Larger font */
+            line-height: 1.6;
         }
 
         .tool-link {
@@ -265,13 +263,14 @@
             font-weight: 600;
             text-decoration: none;
             transition: var(--transition);
-            font-size: 1rem;
+            font-size: 1.1rem;
             position: relative;
             z-index: 2;
         }
 
         .tool-link:hover {
             color: var(--secondary);
+            transform: translateX(5px);
         }
 
         /* Features Section */
@@ -393,13 +392,14 @@
         /* Responsive Styles */
         @media (max-width: 1400px) {
             .tools-grid {
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
         @media (max-width: 1200px) {
             .tools-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 25px;
             }
         }
 
@@ -409,7 +409,12 @@
             }
             
             .tools-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 0 20px;
             }
         }
 
@@ -459,6 +464,7 @@
             
             .tools-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
         }
 
@@ -481,6 +487,11 @@
             
             .tools-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 0 15px;
             }
         }
     </style>
@@ -535,7 +546,7 @@
         </div>
         
         <div class="tools-grid">
-            <!-- First 6 tools for the first row -->
+            <!-- First row of tools -->
             <div class="tool-card">
                 <a href="/tools/merge-pdf.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -584,6 +595,7 @@
                 </div>
             </div>
 
+            <!-- Second row of tools -->
             <div class="tool-card">
                 <a href="/tools/word-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -608,7 +620,6 @@
                 </div>
             </div>
 
-            <!-- Next 6 tools for the second row -->
             <div class="tool-card">
                 <a href="/tools/excel-to-pdf-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
@@ -633,6 +644,7 @@
                 </div>
             </div>
 
+            <!-- Third row of tools -->
             <div class="tool-card">
                 <a href="/tools/pdf-to-jpg-converter.html" class="tool-card-link"></a>
                 <div class="tool-icon">
