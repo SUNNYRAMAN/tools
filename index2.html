@@ -217,15 +217,18 @@
             top: 100%;
             left: 0;
             background: white;
-            min-width: 250px;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             box-shadow: var(--box-shadow);
-            padding: 1rem 0;
+            padding: 1.5rem;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
             transition: var(--transition);
+            width: 700px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
         .dropdown:hover .dropdown-menu {
@@ -234,21 +237,31 @@
             transform: translateY(0);
         }
 
-        .dropdown-menu h4 {
-            padding: 0.5rem 1.5rem;
-            margin: 0;
+        .dropdown-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-column h4 {
+            margin: 0 0 0.8rem 0;
             font-size: 0.9rem;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .dropdown-menu a {
             display: block;
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 0;
             color: var(--dark);
             text-decoration: none;
             transition: var(--transition);
+            font-size: 0.9rem;
+            border-radius: 4px;
+            padding-left: 0.5rem;
         }
 
         .dropdown-menu a:hover {
@@ -256,10 +269,10 @@
             color: var(--primary);
         }
 
-        .dropdown-divider {
-            height: 1px;
-            background: #e9ecef;
-            margin: 0.5rem 0;
+        /* Image Tools Dropdown */
+        .image-tools-dropdown .dropdown-menu {
+            width: 400px;
+            grid-template-columns: 1fr;
         }
 
         /* Hero Section */
@@ -597,6 +610,14 @@
             .tools-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+            
+            .dropdown-menu {
+                width: 600px;
+            }
+            
+            .image-tools-dropdown .dropdown-menu {
+                width: 350px;
+            }
         }
 
         @media (max-width: 992px) {
@@ -609,7 +630,12 @@
             }
             
             .dropdown-menu {
-                min-width: 200px;
+                width: 500px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .image-tools-dropdown .dropdown-menu {
+                width: 300px;
             }
         }
 
@@ -673,20 +699,22 @@
                 box-shadow: none;
                 background: transparent;
                 padding: 0;
+                width: 100%;
+                grid-template-columns: 1fr;
             }
             
-            .dropdown-menu h4 {
-                padding: 0.5rem 0;
+            .dropdown-column h4 {
                 color: white;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             }
             
             .dropdown-menu a {
-                padding: 0.5rem 0 0.5rem 1rem;
                 color: white;
+                padding: 0.5rem 0 0.5rem 1rem;
             }
             
-            .dropdown-divider {
-                background: rgba(255, 255, 255, 0.2);
+            .image-tools-dropdown .dropdown-menu {
+                width: 100%;
             }
         }
 
@@ -737,63 +765,73 @@
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="dropdown-menu">
-                                <h4>ORGANIZE PDF</h4>
-                                <a href="/tools/merge-pdf.html">Merge PDF</a>
-                                <a href="/tools/split-pdf.html">Split PDF</a>
-                                <a href="/tools/pdf-organize-tool.html">Organize PDF</a>
-                                <a href="/tools/rotate-pdf-tool.html">Rotate PDF</a>
-                                <a href="/tools/page-numbers.html">Add Page Numbers</a>
+                                <div class="dropdown-column">
+                                    <h4>ORGANIZE PDF</h4>
+                                    <a href="/tools/merge-pdf.html">Merge PDF</a>
+                                    <a href="/tools/split-pdf.html">Split PDF</a>
+                                    <a href="/tools/pdf-organize-tool.html">Organize PDF</a>
+                                    <a href="/tools/rotate-pdf-tool.html">Rotate PDF</a>
+                                    <a href="/tools/page-numbers.html">Add Page Numbers</a>
+                                </div>
                                 
-                                <div class="dropdown-divider"></div>
-                                <h4>OPTIMIZE PDF</h4>
-                                <a href="/tools/pdf-compressor.html">Compress PDF</a>
-                                <a href="/tools/pdf-repair-tool.html">Repair PDF</a>
-                                <a href="/tools/ocr-pdf-tool.html">OCR PDF</a>
+                                <div class="dropdown-column">
+                                    <h4>OPTIMIZE PDF</h4>
+                                    <a href="/tools/pdf-compressor.html">Compress PDF</a>
+                                    <a href="/tools/pdf-repair-tool.html">Repair PDF</a>
+                                    <a href="/tools/ocr-pdf-tool.html">OCR PDF</a>
+                                </div>
                                 
-                                <div class="dropdown-divider"></div>
-                                <h4>CONVERT TO PDF</h4>
-                                <a href="/tools/jpg-to-pdf-converter.html">JPG to PDF</a>
-                                <a href="/tools/word-to-pdf-converter.html">Word to PDF</a>
-                                <a href="/tools/powerpoint-to-pdf-converter.html">PowerPoint to PDF</a>
-                                <a href="/tools/excel-to-pdf-converter.html">Excel to PDF</a>
-                                <a href="/tools/html-to-pdf-converter.html">HTML to PDF</a>
-                                <a href="/tools/scan-to-pdf-tool.html">Scan to PDF</a>
+                                <div class="dropdown-column">
+                                    <h4>CONVERT TO PDF</h4>
+                                    <a href="/tools/jpg-to-pdf-converter.html">JPG to PDF</a>
+                                    <a href="/tools/word-to-pdf-converter.html">Word to PDF</a>
+                                    <a href="/tools/powerpoint-to-pdf-converter.html">PowerPoint to PDF</a>
+                                    <a href="/tools/excel-to-pdf-converter.html">Excel to PDF</a>
+                                    <a href="/tools/html-to-pdf-converter.html">HTML to PDF</a>
+                                    <a href="/tools/scan-to-pdf-tool.html">Scan to PDF</a>
+                                </div>
                                 
-                                <div class="dropdown-divider"></div>
-                                <h4>CONVERT FROM PDF</h4>
-                                <a href="/tools/pdf-to-jpg-converter.html">PDF to JPG</a>
-                                <a href="/tools/pdf-word-converter.html">PDF to Word</a>
-                                <a href="/tools/pdf-powerpoint-converter.html">PDF to PowerPoint</a>
-                                <a href="/tools/pdf-to-excel-converter.html">PDF to Excel</a>
+                                <div class="dropdown-column">
+                                    <h4>CONVERT FROM PDF</h4>
+                                    <a href="/tools/pdf-to-jpg-converter.html">PDF to JPG</a>
+                                    <a href="/tools/pdf-word-converter.html">PDF to Word</a>
+                                    <a href="/tools/pdf-powerpoint-converter.html">PDF to PowerPoint</a>
+                                    <a href="/tools/pdf-to-excel-converter.html">PDF to Excel</a>
+                                </div>
                                 
-                                <div class="dropdown-divider"></div>
-                                <h4>EDIT PDF</h4>
-                                <a href="/tools/edit-pdf-tool.html">Edit PDF</a>
-                                <a href="/tools/sign-pdf-tool.html">Sign PDF</a>
-                                <a href="/tools/watermark-tool.html">Watermark PDF</a>
-                                <a href="/tools/crop-pdf-tool.html">Crop PDF</a>
-                                <a href="/tools/redact-pdf-tool.html">Redact PDF</a>
-                                <a href="/tools/pdf-comparison-tool.html">Compare PDF</a>
+                                <div class="dropdown-column">
+                                    <h4>EDIT PDF</h4>
+                                    <a href="/tools/edit-pdf-tool.html">Edit PDF</a>
+                                    <a href="/tools/sign-pdf-tool.html">Sign PDF</a>
+                                    <a href="/tools/watermark-tool.html">Watermark PDF</a>
+                                    <a href="/tools/crop-pdf-tool.html">Crop PDF</a>
+                                    <a href="/tools/redact-pdf-tool.html">Redact PDF</a>
+                                    <a href="/tools/pdf-comparison-tool.html">Compare PDF</a>
+                                </div>
                                 
-                                <div class="dropdown-divider"></div>
-                                <h4>PDF SECURITY</h4>
-                                <a href="/tools/unlock-pdf-tool.html">Unlock PDF</a>
-                                <a href="/tools/pdf-protector.html">Protect PDF</a>
+                                <div class="dropdown-column">
+                                    <h4>PDF SECURITY</h4>
+                                    <a href="/tools/unlock-pdf-tool.html">Unlock PDF</a>
+                                    <a href="/tools/pdf-protector.html">Protect PDF</a>
+                                </div>
                             </div>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown image-tools-dropdown">
                             <div class="dropdown-toggle">
                                 <span>All Image Tools</span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="dropdown-menu">
-                                <a href="/tools/jpg-to-pdf-converter.html">JPG to PDF</a>
-                                <a href="/tools/pdf-to-jpg-converter.html">PDF to JPG</a>
-                                <a href="/tools/img-compress.html">Image Compressor</a>
-                                <a href="/tools/img-converter.html">Image Converter</a>
-                                <a href="/tools/img-resizer.html">Image Resizer</a>
-                                <a href="/tools/crop-img-tool.html">Crop Image</a>
-                                <a href="/tools/watermark-tool.html">Watermark</a>
+                                <div class="dropdown-column">
+                                    <h4>Image Tools</h4>
+                                    <a href="/tools/jpg-to-pdf-converter.html">JPG to PDF</a>
+                                    <a href="/tools/pdf-to-jpg-converter.html">PDF to JPG</a>
+                                    <a href="/tools/img-compress.html">Image Compressor</a>
+                                    <a href="/tools/img-converter.html">Image Converter</a>
+                                    <a href="/tools/img-resizer.html">Image Resizer</a>
+                                    <a href="/tools/crop-img-tool.html">Crop Image</a>
+                                    <a href="/tools/watermark-tool.html">Watermark</a>
+                                </div>
                             </div>
                         </li>
                     </ul>
