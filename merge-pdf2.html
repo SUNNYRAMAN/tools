@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +7,8 @@
     <meta name="description" content="EditInSeconds offers 30+ FREE online tools for PDF editing, conversion, compression, and image processing. Merge, split, convert PDFs and images instantly. No registration required.">
     <meta name="keywords" content="pdf editor, merge pdf, split pdf, compress pdf, jpg to pdf, pdf to jpg, image converter, pdf tools, online pdf editor, free pdf tools">
     <meta name="author" content="EditInSeconds">
+    <meta name="robots" content="index, follow">
+    
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
@@ -1448,6 +1449,14 @@
         mergeBtn.addEventListener('click', mergePdfs);
         downloadBtn.addEventListener('click', downloadPdf);
         resetBtn.addEventListener('click', resetTool);
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
         
         // Functions
         function handleDragOver(e) {
