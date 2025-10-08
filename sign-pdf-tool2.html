@@ -64,9 +64,13 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Parisienne&family=Sacramento&family=Tangerine:wght@400;700&family=Allura&display=swap" rel="stylesheet">
     
     <!-- PDF.js for PDF rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    
+    <!-- PDF-Lib for PDF manipulation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     
     <style>
         :root {
@@ -1417,6 +1421,10 @@
         let totalPages = 1;
         let signatureImage = null;
         let signatureDataUrl = null;
+        let pdfBytes = null;
+        let pdfDoc = null;
+        let signaturePosition = { x: 0, y: 0, width: 150, height: 60 };
+        let pdfScale = 1;
 
         // DOM elements
         const fileInput = document.getElementById('fileInput');
@@ -1640,7 +1648,7 @@
             }
         });
 
-        function handleFileSelect(e) {
+        async function handleFileSelect(e) {
             const file = e.target.files[0];
             if (!file) return;
             
@@ -1659,71 +1667,77 @@
             fileSize.textContent = formatFileSize(file.size);
             fileInfo.style.display = 'block';
             
+            // Store the file bytes for later use
+            const arrayBuffer = await file.arrayBuffer();
+            pdfBytes = new Uint8Array(arrayBuffer);
+            
             // Load and display PDF
-            loadPdf(file);
+            loadPdf(pdfBytes);
         }
 
-        function loadPdf(file) {
+        async function loadPdf(pdfBytes) {
             loadingSpinner.style.display = 'block';
             pdfPreview.innerHTML = '';
             
-            const fileReader = new FileReader();
-            fileReader.onload = function() {
-                const typedarray = new Uint8Array(this.result);
+            try {
+                // Load with PDF.js for display
+                const typedarray = pdfBytes;
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
                 
-                pdfjsLib.getDocument(typedarray).promise.then(pdf => {
-                    currentPdf = pdf;
-                    totalPages = pdf.numPages;
-                    currentPage = 1;
-                    
-                    loadingSpinner.style.display = 'none';
-                    renderPage(currentPage);
-                    
-                    // Show page controls if multiple pages
-                    if (totalPages > 1) {
-                        pageControls.style.display = 'flex';
-                        updatePageInfo();
-                    } else {
-                        pageControls.style.display = 'none';
-                    }
-                    
-                    // Enable add signature button if signature is ready
-                    if (signatureImage) {
-                        addSignatureBtn.disabled = false;
-                        addSignatureBtn.classList.remove('btn-disabled');
-                    }
-                }).catch(error => {
-                    loadingSpinner.style.display = 'none';
-                    console.error('Error loading PDF:', error);
-                    showNotification('Error loading PDF. Please try another file.', 'error');
-                });
-            };
-            
-            fileReader.readAsArrayBuffer(file);
+                currentPdf = pdf;
+                totalPages = pdf.numPages;
+                currentPage = 1;
+                
+                // Load with PDF-Lib for manipulation
+                pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+                
+                loadingSpinner.style.display = 'none';
+                await renderPage(currentPage);
+                
+                // Show page controls if multiple pages
+                if (totalPages > 1) {
+                    pageControls.style.display = 'flex';
+                    updatePageInfo();
+                } else {
+                    pageControls.style.display = 'none';
+                }
+                
+                // Enable add signature button if signature is ready
+                if (signatureImage) {
+                    addSignatureBtn.disabled = false;
+                    addSignatureBtn.classList.remove('btn-disabled');
+                }
+            } catch (error) {
+                loadingSpinner.style.display = 'none';
+                console.error('Error loading PDF:', error);
+                showNotification('Error loading PDF. Please try another file.', 'error');
+            }
         }
 
-        function renderPage(pageNumber) {
-            currentPdf.getPage(pageNumber).then(page => {
-                const viewport = page.getViewport({ scale: 1.5 });
-                
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                
-                pdfPreview.innerHTML = '';
-                pdfPreview.appendChild(canvas);
-                
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                
-                page.render(renderContext).promise.then(() => {
-                    // Set up signature placeholder
-                    setupSignaturePlaceholder(canvas);
-                });
-            });
+        async function renderPage(pageNumber) {
+            const page = await currentPdf.getPage(pageNumber);
+            const viewport = page.getViewport({ scale: 1.5 });
+            
+            // Store the scale for coordinate conversion
+            pdfScale = viewport.scale;
+            
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            pdfPreview.innerHTML = '';
+            pdfPreview.appendChild(canvas);
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            
+            await page.render(renderContext).promise;
+            
+            // Set up signature placeholder
+            setupSignaturePlaceholder(canvas);
         }
 
         function setupSignaturePlaceholder(canvas) {
@@ -1735,10 +1749,16 @@
             const placeholderWidth = 150;
             const placeholderHeight = 60;
             
+            // Store the initial position (will be converted to PDF coordinates later)
+            signaturePosition.x = canvas.width - placeholderWidth - 20;
+            signaturePosition.y = canvas.height - placeholderHeight - 20;
+            signaturePosition.width = placeholderWidth;
+            signaturePosition.height = placeholderHeight;
+            
             signaturePlaceholder.style.width = `${placeholderWidth}px`;
             signaturePlaceholder.style.height = `${placeholderHeight}px`;
-            signaturePlaceholder.style.left = `${canvas.width - placeholderWidth - 20}px`;
-            signaturePlaceholder.style.top = `${canvas.height - placeholderHeight - 20}px`;
+            signaturePlaceholder.style.left = `${signaturePosition.x}px`;
+            signaturePlaceholder.style.top = `${signaturePosition.y}px`;
             
             // Make placeholder draggable and resizable
             makeDraggable(signaturePlaceholder);
@@ -1773,8 +1793,15 @@
                 pos4 = e.clientY;
                 
                 // Set the element's new position
-                element.style.top = (element.offsetTop - pos2) + "px";
-                element.style.left = (element.offsetLeft - pos1) + "px";
+                const newTop = element.offsetTop - pos2;
+                const newLeft = element.offsetLeft - pos1;
+                
+                element.style.top = newTop + "px";
+                element.style.left = newLeft + "px";
+                
+                // Update signature position
+                signaturePosition.x = newLeft;
+                signaturePosition.y = newTop;
             }
             
             function closeDragElement() {
@@ -1795,8 +1822,15 @@
                 let startHeight = parseInt(document.defaultView.getComputedStyle(element).height, 10);
                 
                 function doDrag(e) {
-                    element.style.width = (startWidth + e.clientX - startX) + 'px';
-                    element.style.height = (startHeight + e.clientY - startY) + 'px';
+                    const newWidth = startWidth + e.clientX - startX;
+                    const newHeight = startHeight + e.clientY - startY;
+                    
+                    element.style.width = newWidth + 'px';
+                    element.style.height = newHeight + 'px';
+                    
+                    // Update signature position
+                    signaturePosition.width = newWidth;
+                    signaturePosition.height = newHeight;
                 }
                 
                 function stopDrag() {
@@ -1832,7 +1866,7 @@
 
         // Add signature to PDF
         addSignatureBtn.addEventListener('click', () => {
-            if (!signatureImage || !currentPdf) return;
+            if (!signatureImage || !pdfDoc) return;
             
             // Show signature placeholder
             signaturePlaceholder.style.display = 'block';
@@ -1864,28 +1898,70 @@
         });
 
         // Download signed PDF
-        downloadBtn.addEventListener('click', () => {
-            if (!currentPdf || !signatureImage) return;
+        downloadBtn.addEventListener('click', async () => {
+            if (!pdfDoc || !signatureImage) return;
             
             loadingSpinner.style.display = 'block';
             
-            // In a real implementation, you would use a PDF library like pdf-lib
-            // to add the signature to the PDF and generate a downloadable file
-            
-            // For demonstration purposes, we'll simulate the process
-            setTimeout(() => {
-                loadingSpinner.style.display = 'none';
+            try {
+                // Convert canvas coordinates to PDF coordinates
+                const pdfPage = pdfDoc.getPages()[currentPage - 1];
+                const { width: pdfWidth, height: pdfHeight } = pdfPage.getSize();
+                
+                // Convert preview coordinates to PDF coordinates
+                const previewCanvas = pdfPreview.querySelector('canvas');
+                const previewWidth = previewCanvas.width;
+                const previewHeight = previewCanvas.height;
+                
+                // Calculate the scaling factors
+                const scaleX = pdfWidth / previewWidth;
+                const scaleY = pdfHeight / previewHeight;
+                
+                // Convert signature position to PDF coordinates
+                const pdfX = signaturePosition.x * scaleX;
+                const pdfY = pdfHeight - (signaturePosition.y * scaleY) - (signaturePosition.height * scaleY);
+                const pdfWidthSig = signaturePosition.width * scaleX;
+                const pdfHeightSig = signaturePosition.height * scaleY;
+                
+                // Embed the signature image
+                let signatureEmbed;
+                if (signatureDataUrl.startsWith('data:image/png')) {
+                    signatureEmbed = await pdfDoc.embedPng(signatureDataUrl);
+                } else {
+                    signatureEmbed = await pdfDoc.embedJpg(signatureDataUrl);
+                }
+                
+                // Draw the signature on the PDF page
+                pdfPage.drawImage(signatureEmbed, {
+                    x: pdfX,
+                    y: pdfY,
+                    width: pdfWidthSig,
+                    height: pdfHeightSig,
+                });
+                
+                // Save the modified PDF
+                const pdfBytes = await pdfDoc.save();
                 
                 // Create a download link
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.href = signatureDataUrl; // In reality, this would be the signed PDF
+                link.href = url;
                 link.download = 'signed-document.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 
+                // Clean up the URL object
+                setTimeout(() => URL.revokeObjectURL(url), 100);
+                
+                loadingSpinner.style.display = 'none';
                 showNotification('Signed PDF downloaded successfully!', 'success');
-            }, 1500);
+            } catch (error) {
+                loadingSpinner.style.display = 'none';
+                console.error('Error signing PDF:', error);
+                showNotification('Error creating signed PDF. Please try again.', 'error');
+            }
         });
 
         // Utility functions
