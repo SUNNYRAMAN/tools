@@ -533,11 +533,12 @@
             transition: var(--transition);
             cursor: pointer;
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
-        .file-upload-area:hover {
+        .file-upload-area.dragover {
             border-color: var(--primary);
-            background: rgba(67, 97, 238, 0.02);
+            background: rgba(67, 97, 238, 0.05);
         }
 
         .file-upload-area i {
@@ -1609,6 +1610,7 @@
             initializeSignatureCanvas();
             setupEventListeners();
             setupTabSwitching();
+            setupDragAndDrop();
         });
 
         // Initialize signature drawing canvas
@@ -1677,6 +1679,57 @@
             
             // Download
             document.getElementById('downloadBtn').addEventListener('click', downloadSignedPDF);
+        }
+
+        // Set up drag and drop functionality
+        function setupDragAndDrop() {
+            const dropArea = document.getElementById('fileUploadArea');
+            
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            // Highlight drop area when item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            // Handle dropped files
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            function highlight() {
+                dropArea.classList.add('dragover');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('dragover');
+            }
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    // Create a fake event object to pass to handleFileSelect
+                    const event = {
+                        target: {
+                            files: files
+                        }
+                    };
+                    handleFileSelect(event);
+                }
+            }
         }
 
         // Set up tab switching for signature options
