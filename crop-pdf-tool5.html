@@ -68,6 +68,9 @@
     <!-- PDF.js library for PDF rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <style>
         :root {
             --primary: #4361ee;
@@ -1540,6 +1543,7 @@
         let startX, startY;
         let cropRect = { x: 0, y: 0, width: 0, height: 0 };
         let scale = 1;
+        let originalFile = null;
 
         // Event Listeners
         uploadArea.addEventListener('click', () => fileInput.click());
@@ -1790,6 +1794,7 @@
         function loadPDF(file) {
             // Show loading state
             pdfPreview.innerHTML = '<p>Loading PDF...</p>';
+            originalFile = file;
             
             const fileReader = new FileReader();
             
@@ -1918,37 +1923,182 @@
             isDragging = false;
             cropRect = { x: 0, y: 0, width: 0, height: 0 };
             scale = 1;
+            originalFile = null;
             
             // Clear file input
             fileInput.value = '';
         }
 
-        function processCrop() {
+        async function processCrop() {
             // Show processing area
             toolInterface.classList.remove('active');
             processingArea.classList.add('active');
             
-            // Simulate processing with progress bar
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 5;
-                progressBar.style.width = `${progress}%`;
+            try {
+                // Get crop settings
+                const mode = cropMode.value;
+                const applyToAll = applyTo.value === 'all';
                 
-                if (progress >= 100) {
-                    clearInterval(interval);
+                // Process the PDF
+                const croppedPDF = await cropPDF(mode, applyToAll);
+                
+                // Store the result for download
+                window.croppedPDFBlob = croppedPDF;
+                
+                // Show results after processing
+                processingArea.classList.remove('active');
+                resultsArea.classList.add('active');
+            } catch (error) {
+                console.error('Error processing PDF:', error);
+                alert('Error processing PDF. Please try again.');
+                resetUI();
+            }
+        }
+
+        async function cropPDF(mode, applyToAll) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    // Initialize jsPDF
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF();
                     
-                    // Show results after processing
-                    processingArea.classList.remove('active');
-                    resultsArea.classList.add('active');
+                    // Get the pages to process
+                    const pagesToProcess = applyToAll ? 
+                        Array.from({length: totalPages}, (_, i) => i + 1) : 
+                        [currentPage];
+                    
+                    // Process each page
+                    for (let i = 0; i < pagesToProcess.length; i++) {
+                        const pageNum = pagesToProcess[i];
+                        
+                        // Update progress
+                        const progress = Math.round((i / pagesToProcess.length) * 100);
+                        progressBar.style.width = `${progress}%`;
+                        
+                        // Get the page
+                        const page = await pdfDoc.getPage(pageNum);
+                        const viewport = page.getViewport({ scale: 2.0 });
+                        
+                        // Create a temporary canvas for rendering
+                        const tempCanvas = document.createElement('canvas');
+                        const tempCtx = tempCanvas.getContext('2d');
+                        tempCanvas.width = viewport.width;
+                        tempCanvas.height = viewport.height;
+                        
+                        // Render the page to the canvas
+                        await page.render({
+                            canvasContext: tempCtx,
+                            viewport: viewport
+                        }).promise;
+                        
+                        // Calculate crop area based on mode
+                        let cropArea = calculateCropArea(mode, viewport);
+                        
+                        // Create a new canvas with the cropped area
+                        const croppedCanvas = document.createElement('canvas');
+                        const croppedCtx = croppedCanvas.getContext('2d');
+                        croppedCanvas.width = cropArea.width;
+                        croppedCanvas.height = cropArea.height;
+                        
+                        // Draw the cropped area
+                        croppedCtx.drawImage(
+                            tempCanvas,
+                            cropArea.x, cropArea.y, cropArea.width, cropArea.height,
+                            0, 0, cropArea.width, cropArea.height
+                        );
+                        
+                        // Convert canvas to image data
+                        const imgData = croppedCanvas.toDataURL('image/jpeg', 0.9);
+                        
+                        // Add page to PDF
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        // Calculate dimensions for PDF (convert pixels to mm)
+                        const widthMM = (cropArea.width / viewport.width) * 210; // A4 width in mm
+                        const heightMM = (cropArea.height / viewport.height) * 297; // A4 height in mm
+                        
+                        // Add image to PDF
+                        pdf.addImage(imgData, 'JPEG', 0, 0, widthMM, heightMM);
+                    }
+                    
+                    // Final progress update
+                    progressBar.style.width = '100%';
+                    
+                    // Generate PDF blob
+                    const pdfBlob = pdf.output('blob');
+                    resolve(pdfBlob);
+                    
+                } catch (error) {
+                    reject(error);
                 }
-            }, 100);
+            });
+        }
+
+        function calculateCropArea(mode, viewport) {
+            const dpi = 72; // Standard PDF DPI
+            const mmToPx = dpi / 25.4;
+            
+            switch (mode) {
+                case 'manual':
+                    // Use the manually selected crop area
+                    return {
+                        x: cropRect.x,
+                        y: cropRect.y,
+                        width: cropRect.width,
+                        height: cropRect.height
+                    };
+                    
+                case 'margins':
+                    // Remove margins based on the specified size
+                    const marginPx = parseFloat(marginSize.value) * mmToPx * (96 / 72);
+                    return {
+                        x: marginPx,
+                        y: marginPx,
+                        width: viewport.width - (2 * marginPx),
+                        height: viewport.height - (2 * marginPx)
+                    };
+                    
+                case 'custom':
+                    // Remove custom margins
+                    const topPx = parseFloat(marginTop.value) * mmToPx * (96 / 72);
+                    const rightPx = parseFloat(marginRight.value) * mmToPx * (96 / 72);
+                    const bottomPx = parseFloat(marginBottom.value) * mmToPx * (96 / 72);
+                    const leftPx = parseFloat(marginLeft.value) * mmToPx * (96 / 72);
+                    
+                    return {
+                        x: leftPx,
+                        y: topPx,
+                        width: viewport.width - (leftPx + rightPx),
+                        height: viewport.height - (topPx + bottomPx)
+                    };
+                    
+                default:
+                    return {
+                        x: 0,
+                        y: 0,
+                        width: viewport.width,
+                        height: viewport.height
+                    };
+            }
         }
 
         function downloadCroppedPDF() {
-            // In a real implementation, this would generate and download the cropped PDF
-            // For this demo, we'll create a simple alert and reset the UI
+            if (!window.croppedPDFBlob) {
+                alert('No cropped PDF available. Please crop a PDF first.');
+                return;
+            }
             
-            alert('In a real implementation, your cropped PDF would download now. This is a demo version.');
+            // Create download link
+            const url = URL.createObjectURL(window.croppedPDFBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cropped-document.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
             
             // Reset UI after download
             setTimeout(() => {
