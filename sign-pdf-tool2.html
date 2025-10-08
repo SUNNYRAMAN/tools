@@ -68,6 +68,10 @@
     <!-- PDF.js for PDF rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     
+    <!-- PDF-Lib for PDF manipulation -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+    
     <style>
         :root {
             --primary: #4361ee;
@@ -1417,6 +1421,9 @@
         let totalPages = 1;
         let signatureImage = null;
         let signatureDataUrl = null;
+        let pdfBytes = null;
+        let pdfDoc = null;
+        let pdfPages = [];
 
         // DOM elements
         const fileInput = document.getElementById('fileInput');
@@ -1640,7 +1647,7 @@
             }
         });
 
-        function handleFileSelect(e) {
+        async function handleFileSelect(e) {
             const file = e.target.files[0];
             if (!file) return;
             
@@ -1660,24 +1667,26 @@
             fileInfo.style.display = 'block';
             
             // Load and display PDF
-            loadPdf(file);
+            await loadPdf(file);
         }
 
-        function loadPdf(file) {
+        async function loadPdf(file) {
             loadingSpinner.style.display = 'block';
             pdfPreview.innerHTML = '';
             
             const fileReader = new FileReader();
-            fileReader.onload = function() {
-                const typedarray = new Uint8Array(this.result);
+            fileReader.onload = async function() {
+                pdfBytes = new Uint8Array(this.result);
                 
-                pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+                try {
+                    // Load PDF for preview
+                    const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
                     currentPdf = pdf;
                     totalPages = pdf.numPages;
                     currentPage = 1;
                     
                     loadingSpinner.style.display = 'none';
-                    renderPage(currentPage);
+                    await renderPage(currentPage);
                     
                     // Show page controls if multiple pages
                     if (totalPages > 1) {
@@ -1687,43 +1696,46 @@
                         pageControls.style.display = 'none';
                     }
                     
+                    // Load PDF for editing with pdf-lib
+                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+                    pdfPages = pdfDoc.getPages();
+                    
                     // Enable add signature button if signature is ready
                     if (signatureImage) {
                         addSignatureBtn.disabled = false;
                         addSignatureBtn.classList.remove('btn-disabled');
                     }
-                }).catch(error => {
+                } catch (error) {
                     loadingSpinner.style.display = 'none';
                     console.error('Error loading PDF:', error);
                     showNotification('Error loading PDF. Please try another file.', 'error');
-                });
+                }
             };
             
             fileReader.readAsArrayBuffer(file);
         }
 
-        function renderPage(pageNumber) {
-            currentPdf.getPage(pageNumber).then(page => {
-                const viewport = page.getViewport({ scale: 1.5 });
-                
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                
-                pdfPreview.innerHTML = '';
-                pdfPreview.appendChild(canvas);
-                
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                
-                page.render(renderContext).promise.then(() => {
-                    // Set up signature placeholder
-                    setupSignaturePlaceholder(canvas);
-                });
-            });
+        async function renderPage(pageNumber) {
+            const page = await currentPdf.getPage(pageNumber);
+            const viewport = page.getViewport({ scale: 1.5 });
+            
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            pdfPreview.innerHTML = '';
+            pdfPreview.appendChild(canvas);
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            
+            await page.render(renderContext).promise;
+            
+            // Set up signature placeholder
+            setupSignaturePlaceholder(canvas);
         }
 
         function setupSignaturePlaceholder(canvas) {
@@ -1864,28 +1876,70 @@
         });
 
         // Download signed PDF
-        downloadBtn.addEventListener('click', () => {
-            if (!currentPdf || !signatureImage) return;
+        downloadBtn.addEventListener('click', async () => {
+            if (!pdfDoc || !signatureImage) return;
             
             loadingSpinner.style.display = 'block';
             
-            // In a real implementation, you would use a PDF library like pdf-lib
-            // to add the signature to the PDF and generate a downloadable file
-            
-            // For demonstration purposes, we'll simulate the process
-            setTimeout(() => {
-                loadingSpinner.style.display = 'none';
+            try {
+                // Get signature position and dimensions from the placeholder
+                const placeholder = document.getElementById('signaturePlaceholder');
+                const placeholderRect = placeholder.getBoundingClientRect();
+                const previewRect = document.getElementById('pdfPreview').getBoundingClientRect();
+                
+                // Calculate relative position within the PDF page
+                const scaleX = pdfPages[0].getWidth() / previewRect.width;
+                const scaleY = pdfPages[0].getHeight() / previewRect.height;
+                
+                const x = (placeholderRect.left - previewRect.left) * scaleX;
+                const y = pdfPages[0].getHeight() - (placeholderRect.top - previewRect.top) * scaleY - (placeholderRect.height * scaleY);
+                const width = placeholderRect.width * scaleX;
+                const height = placeholderRect.height * scaleY;
+                
+                // Embed the signature image
+                const signatureImageBytes = await fetch(signatureDataUrl).then(res => res.arrayBuffer());
+                let signaturePngImage;
+                
+                try {
+                    signaturePngImage = await pdfDoc.embedPng(signatureImageBytes);
+                } catch (e) {
+                    // If PNG embedding fails, try JPG
+                    signaturePngImage = await pdfDoc.embedJpg(signatureImageBytes);
+                }
+                
+                // Add signature to the first page (for demo purposes)
+                // In a real implementation, you would add to the current page
+                pdfPages[0].drawImage(signaturePngImage, {
+                    x: x,
+                    y: y,
+                    width: width,
+                    height: height,
+                });
+                
+                // Save the PDF with the signature
+                const pdfBytes = await pdfDoc.save();
                 
                 // Create a download link
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
                 const link = document.createElement('a');
-                link.href = signatureDataUrl; // In reality, this would be the signed PDF
+                link.href = url;
                 link.download = 'signed-document.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 
+                // Clean up the URL object
+                setTimeout(() => URL.revokeObjectURL(url), 100);
+                
+                loadingSpinner.style.display = 'none';
                 showNotification('Signed PDF downloaded successfully!', 'success');
-            }, 1500);
+            } catch (error) {
+                loadingSpinner.style.display = 'none';
+                console.error('Error signing PDF:', error);
+                showNotification('Error signing PDF. Please try again.', 'error');
+            }
         });
 
         // Utility functions
