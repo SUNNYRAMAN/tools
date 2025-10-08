@@ -1296,7 +1296,7 @@
                         <i class="fas fa-file-pdf"></i>
                         <p>Drag & drop your PDF here or click to browse</p>
                         <p class="file-size-info">Max file size: 25MB</p>
-                        <button class="upload-btn">Select PDF File</button>
+                        <button class="upload-btn" id="uploadBtn">Select PDF File</button>
                         <input type="file" id="pdfFile" class="file-input" accept=".pdf">
                     </div>
                     <div class="error-message" id="fileError"></div>
@@ -1607,6 +1607,7 @@
 
         // Initialize the tool
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Sign PDF Tool...');
             initializeSignatureCanvas();
             setupEventListeners();
             setupTabSwitching();
@@ -1628,15 +1629,24 @@
 
         // Set up event listeners
         function setupEventListeners() {
-            // File upload
-            document.getElementById('fileUploadArea').addEventListener('click', () => {
+            console.log('Setting up event listeners...');
+            
+            // File upload button
+            document.getElementById('uploadBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Upload button clicked');
                 document.getElementById('pdfFile').click();
             });
             
-            document.getElementById('pdfFile').addEventListener('change', handleFileSelect);
+            // File input change
+            document.getElementById('pdfFile').addEventListener('change', function(e) {
+                console.log('File input changed', e.target.files);
+                handleFileSelect(e);
+            });
             
             // Signature upload
-            document.getElementById('signatureUploadArea').addEventListener('click', () => {
+            document.getElementById('signatureUploadArea').addEventListener('click', function() {
                 document.getElementById('signatureImage').click();
             });
             
@@ -1656,7 +1666,7 @@
             
             // Canvas controls
             document.getElementById('clearCanvas').addEventListener('click', clearSignatureCanvas);
-            document.getElementById('changeColor').addEventListener('click', () => {
+            document.getElementById('changeColor').addEventListener('click', function() {
                 document.getElementById('penColor').click();
             });
             document.getElementById('penColor').addEventListener('change', function() {
@@ -1717,6 +1727,7 @@
             }
             
             function handleDrop(e) {
+                console.log('File dropped');
                 const dt = e.dataTransfer;
                 const files = dt.files;
                 
@@ -1758,8 +1769,14 @@
 
         // Handle PDF file selection
         function handleFileSelect(event) {
+            console.log('handleFileSelect called', event);
             const file = event.target.files[0];
-            if (!file) return;
+            if (!file) {
+                console.log('No file selected');
+                return;
+            }
+            
+            console.log('File selected:', file.name, file.type, file.size);
             
             // Validate file type
             if (file.type !== 'application/pdf') {
@@ -1782,10 +1799,12 @@
             // Read the file
             const fileReader = new FileReader();
             fileReader.onload = function() {
+                console.log('File read successfully');
                 const typedarray = new Uint8Array(this.result);
                 
                 // Load the PDF
                 pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                    console.log('PDF loaded successfully:', pdf.numPages, 'pages');
                     pdfDoc = pdf;
                     document.getElementById('pageCount').textContent = pdf.numPages;
                     
@@ -1804,10 +1823,20 @@
                     
                     // Hide loading state
                     document.getElementById('pdfLoading').classList.remove('active');
+                    
+                    // Show success message
+                    showSuccess('PDF loaded successfully!');
                 }).catch(function(error) {
+                    console.error('Error loading PDF:', error);
                     showError('Error loading PDF: ' + error.message);
                     document.getElementById('pdfLoading').classList.remove('active');
                 });
+            };
+            
+            fileReader.onerror = function() {
+                console.error('Error reading file');
+                showError('Error reading file. Please try again.');
+                document.getElementById('pdfLoading').classList.remove('active');
             };
             
             fileReader.readAsArrayBuffer(file);
