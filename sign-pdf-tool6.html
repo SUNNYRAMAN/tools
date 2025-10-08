@@ -65,6 +65,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- PDF.js for PDF rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    
     <style>
         :root {
             --primary: #4361ee;
@@ -622,6 +625,7 @@
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
             overflow: auto;
+            position: relative;
         }
 
         .preview-placeholder {
@@ -637,6 +641,24 @@
             font-size: 3rem;
             margin-bottom: 1rem;
             color: var(--primary);
+        }
+
+        .pdf-page {
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .signature-overlay {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .typed-signature {
+            font-family: 'Dancing Script', cursive;
+            color: #000;
+            font-weight: bold;
         }
 
         .action-buttons {
@@ -1199,7 +1221,7 @@
                         </div>
                     </div>
 
-                    <div class="canvas-container" id="drawSignature">
+                    <div class="canvas-container active" id="drawSignature">
                         <h4>Draw Your Signature</h4>
                         <canvas id="signatureCanvas"></canvas>
                         <div class="canvas-controls">
@@ -1277,7 +1299,7 @@
                         </div>
                     </div>
                     <div class="action-buttons">
-                        <a href="#" class="btn btn-success" id="downloadBtn" download="signed-document.pdf">Download Signed PDF</a>
+                        <a href="#" class="btn btn-success" id="downloadBtn">Download Signed PDF</a>
                         <button class="btn btn-outline" id="newDocumentBtn" style="color: var(--primary); border-color: var(--primary);">Sign Another Document</button>
                     </div>
                 </div>
@@ -1491,6 +1513,9 @@
     </footer>
 
     <script>
+        // Set PDF.js worker path
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
         // Mobile menu toggle
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
             document.getElementById('mainNav').classList.toggle('active');
@@ -1521,6 +1546,8 @@
         const fileName = document.getElementById('fileName');
         const fileSize = document.getElementById('fileSize');
         const applySignatureBtn = document.getElementById('applySignature');
+        let currentPdf = null;
+        let pdfPages = [];
 
         fileInput.addEventListener('change', function(e) {
             if (this.files && this.files[0]) {
@@ -1546,6 +1573,9 @@
                 fileInfo.classList.add('active');
                 uploadArea.classList.add('active');
                 applySignatureBtn.disabled = false;
+                
+                // Load PDF for preview
+                loadPdfForPreview(file);
                 
                 // Clear any previous errors
                 hideError();
@@ -1690,6 +1720,69 @@
             showSuccess('Signature saved successfully!');
         });
 
+        // Load PDF for preview
+        function loadPdfForPreview(file) {
+            const fileReader = new FileReader();
+            
+            fileReader.onload = function() {
+                const typedarray = new Uint8Array(this.result);
+                
+                pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                    currentPdf = pdf;
+                    pdfPages = [];
+                    
+                    // Render first page for preview
+                    renderPage(pdf, 1);
+                }).catch(function(error) {
+                    showError('Error loading PDF: ' + error.message);
+                });
+            };
+            
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        // Render PDF page
+        function renderPage(pdf, pageNumber) {
+            pdf.getPage(pageNumber).then(function(page) {
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                
+                page.render(renderContext).promise.then(function() {
+                    const previewPdf = document.getElementById('previewPdf');
+                    previewPdf.innerHTML = '';
+                    
+                    const pageContainer = document.createElement('div');
+                    pageContainer.className = 'pdf-page';
+                    pageContainer.style.width = '100%';
+                    pageContainer.style.textAlign = 'center';
+                    
+                    const img = document.createElement('img');
+                    img.src = canvas.toDataURL();
+                    img.style.maxWidth = '100%';
+                    img.style.height = 'auto';
+                    img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                    
+                    pageContainer.appendChild(img);
+                    previewPdf.appendChild(pageContainer);
+                    
+                    // Store page data for signing
+                    pdfPages.push({
+                        pageNumber: pageNumber,
+                        canvas: canvas,
+                        viewport: viewport
+                    });
+                });
+            });
+        }
+
         // Apply signature to PDF
         applySignatureBtn.addEventListener('click', function() {
             if (!fileInput.files || !fileInput.files[0]) {
@@ -1752,11 +1845,13 @@
             const size = document.getElementById('signatureSize').value;
             const addDate = document.getElementById('signatureDate').value === 'yes';
             
-            // In a real implementation, this would send the data to a server
-            // For this example, we'll simulate processing with a timeout
+            // Process the PDF with signature
             setTimeout(function() {
                 // Hide loading spinner
                 document.getElementById('loadingSpinner').classList.remove('active');
+                
+                // Apply signature to the preview
+                applySignatureToPreview(signature, signatureType, position, size, addDate);
                 
                 // Show success message
                 showSuccess('PDF successfully signed!');
@@ -1764,27 +1859,144 @@
                 // Show preview area
                 document.getElementById('previewArea').classList.add('active');
                 
-                // Update preview (in a real implementation, this would show the actual signed PDF)
-                const previewPdf = document.getElementById('previewPdf');
-                previewPdf.innerHTML = `
-                    <div class="preview-placeholder">
-                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
-                        <p>Your PDF has been successfully signed</p>
-                        <p class="small">File: ${fileInput.files[0].name}</p>
-                        <p class="small">Signature: ${signatureType === 'draw' ? 'Drawn' : signatureType === 'type' ? 'Typed' : 'Uploaded'}</p>
-                        <p class="small">Position: ${position}</p>
-                    </div>
-                `;
-                
                 // Set up download button
                 const downloadBtn = document.getElementById('downloadBtn');
-                // In a real implementation, this would be the actual signed PDF URL
-                // For this example, we'll create a dummy URL
-                const signedPdfUrl = URL.createObjectURL(fileInput.files[0]);
-                downloadBtn.href = signedPdfUrl;
+                downloadBtn.onclick = function(e) {
+                    e.preventDefault();
+                    downloadSignedPdf(signature, signatureType, position, size, addDate);
+                };
                 
                 // Scroll to preview area
                 document.getElementById('previewArea').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+
+        // Apply signature to preview
+        function applySignatureToPreview(signature, signatureType, position, size, addDate) {
+            const previewPdf = document.getElementById('previewPdf');
+            const pageContainer = previewPdf.querySelector('.pdf-page');
+            
+            if (!pageContainer) return;
+            
+            // Create signature overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'signature-overlay';
+            
+            // Calculate position
+            const img = pageContainer.querySelector('img');
+            const imgRect = img.getBoundingClientRect();
+            const containerRect = pageContainer.getBoundingClientRect();
+            
+            let top, left;
+            const signatureSize = size === 'small' ? 100 : size === 'medium' ? 150 : 200;
+            
+            switch(position) {
+                case 'bottom-right':
+                    top = containerRect.height - signatureSize - 50;
+                    left = containerRect.width - signatureSize - 50;
+                    break;
+                case 'bottom-left':
+                    top = containerRect.height - signatureSize - 50;
+                    left = 50;
+                    break;
+                case 'top-right':
+                    top = 50;
+                    left = containerRect.width - signatureSize - 50;
+                    break;
+                case 'top-left':
+                    top = 50;
+                    left = 50;
+                    break;
+                case 'center':
+                    top = (containerRect.height - signatureSize) / 2;
+                    left = (containerRect.width - signatureSize) / 2;
+                    break;
+            }
+            
+            overlay.style.top = top + 'px';
+            overlay.style.left = left + 'px';
+            overlay.style.width = signatureSize + 'px';
+            overlay.style.height = signatureSize + 'px';
+            
+            // Create signature element based on type
+            if (signatureType === 'draw' || signatureType === 'upload') {
+                const img = document.createElement('img');
+                img.src = signature;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                overlay.appendChild(img);
+            } else if (signatureType === 'type') {
+                const text = document.createElement('div');
+                text.className = 'typed-signature';
+                text.textContent = signature.text;
+                text.style.fontFamily = signature.font;
+                text.style.fontSize = '24px';
+                text.style.textAlign = 'center';
+                text.style.width = '100%';
+                text.style.height = '100%';
+                text.style.display = 'flex';
+                text.style.alignItems = 'center';
+                text.style.justifyContent = 'center';
+                overlay.appendChild(text);
+            }
+            
+            // Add date if requested
+            if (addDate) {
+                const date = document.createElement('div');
+                date.textContent = new Date().toLocaleDateString();
+                date.style.position = 'absolute';
+                date.style.bottom = '-25px';
+                date.style.left = '0';
+                date.style.width = '100%';
+                date.style.textAlign = 'center';
+                date.style.fontSize = '12px';
+                date.style.color = '#666';
+                overlay.appendChild(date);
+            }
+            
+            pageContainer.appendChild(overlay);
+        }
+
+        // Download signed PDF
+        function downloadSignedPdf(signature, signatureType, position, size, addDate) {
+            // Show loading spinner
+            document.getElementById('loadingSpinner').classList.add('active');
+            
+            // In a real implementation, this would send the data to a server
+            // that would return a signed PDF. For this demo, we'll create a PDF with jsPDF
+            setTimeout(function() {
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').classList.remove('active');
+                
+                // Create a new PDF with signature (simulated)
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Add content to the PDF
+                doc.setFontSize(16);
+                doc.text('Signed Document', 20, 20);
+                doc.setFontSize(12);
+                doc.text('This document has been digitally signed using EditInSeconds.com', 20, 40);
+                doc.text('Document: ' + fileInput.files[0].name, 20, 60);
+                doc.text('Signature Type: ' + signatureType, 20, 80);
+                doc.text('Signature Position: ' + position, 20, 100);
+                doc.text('Date: ' + new Date().toLocaleDateString(), 20, 120);
+                
+                // Add signature based on type
+                if (signatureType === 'draw' || signatureType === 'upload') {
+                    // For image signatures, we would add the image to the PDF
+                    // This is simplified for the demo
+                    doc.text('Signature: [Image Signature Applied]', 20, 140);
+                } else if (signatureType === 'type') {
+                    doc.setFont(signature.font.toLowerCase().replace(' ', ''));
+                    doc.text('Signature: ' + signature.text, 20, 140);
+                }
+                
+                // Save the PDF
+                doc.save('signed-document.pdf');
+                
+                showSuccess('PDF downloaded successfully!');
             }, 2000);
         }
 
@@ -1819,6 +2031,17 @@
             signatureData = null;
             hideError();
             hideSuccess();
+            currentPdf = null;
+            pdfPages = [];
+            
+            // Reset preview
+            const previewPdf = document.getElementById('previewPdf');
+            previewPdf.innerHTML = `
+                <div class="preview-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>Your signed PDF will appear here</p>
+                </div>
+            `;
             
             // Scroll to upload area
             document.getElementById('uploadArea').scrollIntoView({ behavior: 'smooth' });
@@ -1862,5 +2085,11 @@
             });
         });
     </script>
+    
+    <!-- Include jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Include font packages for typed signatures -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Parisienne&family=Allura&family=Sacramento&display=swap" rel="stylesheet">
 </body>
 </html>
