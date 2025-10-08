@@ -1522,7 +1522,6 @@
         signatureCanvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const touch = e.touches[0];
-            const rect = signatureCanvas.getBoundingClientRect();
             const mouseEvent = new MouseEvent('mousedown', {
                 clientX: touch.clientX,
                 clientY: touch.clientY
@@ -1943,7 +1942,7 @@
             showNotification('Signature added to PDF. You can drag to reposition and resize.', 'success');
         });
 
-        // Download signed PDF
+        // Download signed PDF - FIXED VERSION
         downloadBtn.addEventListener('click', async () => {
             if (!pdfDoc || !signatureImage) return;
             
