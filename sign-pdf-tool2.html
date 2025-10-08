@@ -513,6 +513,7 @@
             height: 200px;
             cursor: crosshair;
             border-radius: var(--border-radius);
+            background: white;
         }
 
         .canvas-controls {
@@ -546,6 +547,23 @@
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-option:nth-child(2) {
+            font-family: 'Great Vibes', cursive;
+        }
+        .font-option:nth-child(3) {
+            font-family: 'Parisienne', cursive;
+        }
+        .font-option:nth-child(4) {
+            font-family: 'Sacramento', cursive;
+        }
+        .font-option:nth-child(5) {
+            font-family: 'Tangerine', cursive;
+        }
+        .font-option:nth-child(6) {
+            font-family: 'Allura', cursive;
         }
 
         .font-option:hover {
@@ -1466,6 +1484,11 @@
         signatureCanvas.width = signatureCanvas.offsetWidth;
         signatureCanvas.height = signatureCanvas.offsetHeight;
 
+        // Initialize canvas with white background
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        ctx.fillStyle = 'black';
+
         // Canvas drawing functions
         function startDrawing(e) {
             isDrawing = true;
@@ -1499,6 +1522,7 @@
         signatureCanvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const touch = e.touches[0];
+            const rect = signatureCanvas.getBoundingClientRect();
             const mouseEvent = new MouseEvent('mousedown', {
                 clientX: touch.clientX,
                 clientY: touch.clientY
@@ -1524,12 +1548,24 @@
 
         // Clear canvas
         clearCanvas.addEventListener('click', () => {
-            ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            ctx.fillStyle = 'black';
         });
 
         // Save drawn signature
         saveSignature.addEventListener('click', () => {
-            signatureDataUrl = signatureCanvas.toDataURL('image/png');
+            // Create a temporary canvas to remove the white background
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = signatureCanvas.width;
+            tempCanvas.height = signatureCanvas.height;
+            
+            // Draw the signature with transparent background
+            tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+            tempCtx.drawImage(signatureCanvas, 0, 0);
+            
+            signatureDataUrl = tempCanvas.toDataURL('image/png');
             signatureImage = new Image();
             signatureImage.src = signatureDataUrl;
             enableSignatureButtons();
@@ -1558,14 +1594,15 @@
             const tempCtx = tempCanvas.getContext('2d');
             
             // Set canvas size based on text
-            tempCtx.font = `48px ${typedSignature.style.fontFamily || "'Dancing Script', cursive"}`;
+            const fontSize = 48;
+            tempCtx.font = `${fontSize}px ${typedSignature.style.fontFamily || "'Dancing Script', cursive"}`;
             const textWidth = tempCtx.measureText(typedSignature.value).width;
             
             tempCanvas.width = textWidth + 40;
             tempCanvas.height = 80;
             
             // Draw the text
-            tempCtx.font = `48px ${typedSignature.style.fontFamily || "'Dancing Script', cursive"}`;
+            tempCtx.font = `${fontSize}px ${typedSignature.style.fontFamily || "'Dancing Script', cursive"}`;
             tempCtx.fillStyle = '#000';
             tempCtx.textBaseline = 'middle';
             tempCtx.fillText(typedSignature.value, 20, 40);
@@ -1648,7 +1685,7 @@
             }
         });
 
-        async function handleFileSelect(e) {
+        function handleFileSelect(e) {
             const file = e.target.files[0];
             if (!file) return;
             
@@ -1667,22 +1704,21 @@
             fileSize.textContent = formatFileSize(file.size);
             fileInfo.style.display = 'block';
             
-            // Store the file bytes for later use
-            const arrayBuffer = await file.arrayBuffer();
-            pdfBytes = new Uint8Array(arrayBuffer);
-            
             // Load and display PDF
-            loadPdf(pdfBytes);
+            loadPdf(file);
         }
 
-        async function loadPdf(pdfBytes) {
+        async function loadPdf(file) {
             loadingSpinner.style.display = 'block';
             pdfPreview.innerHTML = '';
             
             try {
+                // Read the file as ArrayBuffer
+                const arrayBuffer = await readFileAsArrayBuffer(file);
+                pdfBytes = new Uint8Array(arrayBuffer);
+                
                 // Load with PDF.js for display
-                const typedarray = pdfBytes;
-                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
                 
                 currentPdf = pdf;
                 totalPages = pdf.numPages;
@@ -1712,6 +1748,16 @@
                 console.error('Error loading PDF:', error);
                 showNotification('Error loading PDF. Please try another file.', 'error');
             }
+        }
+
+        // Helper function to read file as ArrayBuffer
+        function readFileAsArrayBuffer(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
         }
 
         async function renderPage(pageNumber) {
@@ -1822,8 +1868,8 @@
                 let startHeight = parseInt(document.defaultView.getComputedStyle(element).height, 10);
                 
                 function doDrag(e) {
-                    const newWidth = startWidth + e.clientX - startX;
-                    const newHeight = startHeight + e.clientY - startY;
+                    const newWidth = Math.max(50, startWidth + e.clientX - startX);
+                    const newHeight = Math.max(30, startHeight + e.clientY - startY);
                     
                     element.style.width = newWidth + 'px';
                     element.style.height = newHeight + 'px';
@@ -1940,10 +1986,10 @@
                 });
                 
                 // Save the modified PDF
-                const pdfBytes = await pdfDoc.save();
+                const modifiedPdfBytes = await pdfDoc.save();
                 
                 // Create a download link
-                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
