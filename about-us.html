@@ -183,10 +183,12 @@
         .btn-primary {
             background: var(--accent);
             color: white;
+            border: 2px solid var(--accent);
         }
 
         .btn-primary:hover {
             background: #e11575;
+            border-color: #e11575;
             transform: translateY(-2px);
         }
 
@@ -645,7 +647,7 @@
             flex-grow: 1;
         }
 
-        /* CTA Section */
+        /* CTA Section - FIXED */
         .cta {
             padding: 5rem 0;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -677,6 +679,15 @@
             margin: 0 auto 2rem;
             font-size: 1.1rem;
             position: relative;
+        }
+
+        .cta .btn {
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            display: inline-block;
         }
 
         /* Footer */
@@ -860,7 +871,7 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-tools"></i>
-                    <span><a href="/tools/index.html" style="color: white; text-decoration: none;">EditInSeconds.com</a></span>
+                    <span><a href="/index.html" style="color: white; text-decoration: none;">EditInSeconds.com</a></span>
                 </div>
                 
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
@@ -869,9 +880,9 @@
                 
                 <nav id="mainNav">
                     <ul>
-                        <li><a href="/tools/index.html">Home</a></li>
+                        <li><a href="/index.html">Home</a></li>
                         <li><a href="/tools/about-us.html" class="active">About Us</a></li>
-                        <li><a href="/tools/index.html">All Tools</a></li>
+                        <li><a href="/index.html">All Tools</a></li>
                         <li><a href="/blog.html">Blog</a></li>
                         <li><a href="/contact.html">Contact</a></li>
                     </ul>
@@ -1115,7 +1126,7 @@
                         <i class="fas fa-infinity"></i>
                     </div>
                     <h3>Sustainability</h3>
-                    <p>We're committed to maintaining our free service model while ensuring long-term sustainability.</p>
+                    <p>We're committed to building a sustainable business that can continue providing free tools long-term.</p>
                 </div>
             </div>
         </div>
@@ -1137,12 +1148,13 @@
         </div>
     </div>
 
-    <!-- CTA Section -->
+    <!-- CTA Section - FIXED -->
     <section class="cta">
         <div class="container">
             <h2>Ready to Edit Your Files?</h2>
             <p>Try our free PDF and image tools today. No registration required, no watermarks, no limitations.</p>
-            <a href="/tools/index.html" class="btn btn-primary">Explore All Tools</a>
+            <!-- FIXED: Added proper href and ensured it's clickable -->
+            <a href="/index.html" class="btn btn-primary">Explore All Tools</a>
         </div>
     </section>
 
