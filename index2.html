@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocEdit Pro - PDF & Image Editor</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .tool-category {
+            margin-bottom: 25px;
+        }
+
+        .tool-category h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            color: var(--primary-color);
+        }
+
+        .tool-list {
+            list-style: none;
+        }
+
+        .tool-list li {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-list li:hover {
+            background-color: #e9ecef;
+        }
+
+        .tool-list li.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tool-icon {
+            font-size: 1.2rem;
+        }
+
+        .editor-area {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .editor-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d8;
+        }
+
+        .editor-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .editor-content.active {
+            border-style: solid;
+            justify-content: flex-start;
+        }
+
+        .upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        .file-preview {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .tool-options {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+
+        .tool-options.active {
+            display: block;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .option-group input, .option-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container input {
+            flex: 1;
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px 0;
+            text-align: center;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: 1;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">📄</span>
+                    <span>DocEdit Pro</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">PDF Tools</a></li>
+                        <li><a href="#">Image Tools</a></li>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="tool-category">
+                    <h3>PDF Tools</h3>
+                    <ul class="tool-list">
+                        <li class="active" data-tool="merge-pdf">
+                            <span class="tool-icon">🔗</span>
+                            <span>Merge PDF</span>
+                        </li>
+                        <li data-tool="split-pdf">
+                            <span class="tool-icon">✂️</span>
+                            <span>Split PDF</span>
+                        </li>
+                        <li data-tool="compress-pdf">
+                            <span class="tool-icon">🗜️</span>
+                            <span>Compress PDF</span>
+                        </li>
+                        <li data-tool="convert-pdf">
+                            <span class="tool-icon">🔄</span>
+                            <span>Convert PDF</span>
+                        </li>
+                        <li data-tool="edit-pdf">
+                            <span class="tool-icon">✏️</span>
+                            <span>Edit PDF</span>
+                        </li>
+                        <li data-tool="watermark-pdf">
+                            <span class="tool-icon">💧</span>
+                            <span>Watermark PDF</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tool-category">
+                    <h3>Image Tools</h3>
+                    <ul class="tool-list">
+                        <li data-tool="crop-image">
+                            <span class="tool-icon">✂️</span>
+                            <span>Crop Image</span>
+                        </li>
+                        <li data-tool="resize-image">
+                            <span class="tool-icon">📏</span>
+                            <span>Resize Image</span>
+                        </li>
+                        <li data-tool="rotate-image">
+                            <span class="tool-icon">🔄</span>
+                            <span>Rotate Image</span>
+                        </li>
+                        <li data-tool="filter-image">
+                            <span class="tool-icon">🎨</span>
+                            <span>Image Filters</span>
+                        </li>
+                        <li data-tool="adjust-image">
+                            <span class="tool-icon">⚙️</span>
+                            <span>Adjustments</span>
+                        </li>
+                        <li data-tool="convert-image">
+                            <span class="tool-icon">🔄</span>
+                            <span>Convert Format</span>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="editor-area">
+                <div class="editor-header">
+                    <h2 class="editor-title">Merge PDF</h2>
+                    <div class="editor-actions">
+                        <button class="btn btn-secondary">
+                            <span>📥</span>
+                            <span>Import</span>
+                        </button>
+                        <button class="btn btn-primary">
+                            <span>💾</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="btn btn-success">
+                            <span>📤</span>
+                            <span>Export</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="editor-content" id="editorContent">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📄</div>
+                        <h3 class="upload-text">Drag & Drop your files here</h3>
+                        <p>or</p>
+                        <button class="btn btn-primary" id="browseBtn">
+                            <span>📁</span>
+                            <span>Browse Files</span>
+                        </button>
+                        <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png,.gif">
+                    </div>
+                    <div class="file-preview" id="filePreview">
+                        <!-- File preview will be displayed here -->
+                    </div>
+                </div>
+
+                <div class="tool-options" id="toolOptions">
+                    <div class="option-group">
+                        <label for="mergeOrder">Merge Order</label>
+                        <select id="mergeOrder">
+                            <option value="sequential">Sequential</option>
+                            <option value="reverse">Reverse</option>
+                            <option value="custom">Custom Order</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="pageRange">Page Range</label>
+                        <input type="text" id="pageRange" placeholder="e.g., 1-5, 7, 9-12">
+                    </div>
+                    <div class="option-group">
+                        <label for="quality">Output Quality</label>
+                        <div class="slider-container">
+                            <input type="range" id="quality" min="1" max="100" value="80">
+                            <span class="slider-value" id="qualityValue">80%</span>
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <button class="btn btn-primary" id="applyTool">Apply Tool</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 DocEdit Pro - All-in-One PDF & Image Editing Tool</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const toolListItems = document.querySelectorAll('.tool-list li');
+        const editorTitle = document.querySelector('.editor-title');
+        const editorContent = document.getElementById('editorContent');
+        const uploadArea = document.getElementById('uploadArea');
+        const filePreview = document.getElementById('filePreview');
+        const browseBtn = document.getElementById('browseBtn');
+        const fileInput = document.getElementById('fileInput');
+        const toolOptions = document.getElementById('toolOptions');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const applyToolBtn = document.getElementById('applyTool');
+
+        // Tool data mapping
+        const toolData = {
+            'merge-pdf': {
+                title: 'Merge PDF',
+                options: true
+            },
+            'split-pdf': {
+                title: 'Split PDF',
+                options: true
+            },
+            'compress-pdf': {
+                title: 'Compress PDF',
+                options: true
+            },
+            'convert-pdf': {
+                title: 'Convert PDF',
+                options: true
+            },
+            'edit-pdf': {
+                title: 'Edit PDF',
+                options: true
+            },
+            'watermark-pdf': {
+                title: 'Watermark PDF',
+                options: true
+            },
+            'crop-image': {
+                title: 'Crop Image',
+                options: true
+            },
+            'resize-image': {
+                title: 'Resize Image',
+                options: true
+            },
+            'rotate-image': {
+                title: 'Rotate Image',
+                options: true
+            },
+            'filter-image': {
+                title: 'Image Filters',
+                options: true
+            },
+            'adjust-image': {
+                title: 'Adjustments',
+                options: true
+            },
+            'convert-image': {
+                title: 'Convert Format',
+                options: true
+            }
+        };
+
+        // Event Listeners
+        toolListItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                toolListItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Update editor title and options
+                const toolId = item.getAttribute('data-tool');
+                updateEditorForTool(toolId);
+            });
+        });
+
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', handleFileUpload);
+
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = `${qualitySlider.value}%`;
+        });
+
+        applyToolBtn.addEventListener('click', applyTool);
+
+        // Drag and drop functionality
+        editorContent.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            editorContent.classList.add('drag-over');
+        });
+
+        editorContent.addEventListener('dragleave', () => {
+            editorContent.classList.remove('drag-over');
+        });
+
+        editorContent.addEventListener('drop', (e) => {
+            e.preventDefault();
+            editorContent.classList.remove('drag-over');
+            
+            if (e.dataTransfer.files.length) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+
+        // Functions
+        function updateEditorForTool(toolId) {
+            const tool = toolData[toolId];
+            editorTitle.textContent = tool.title;
+            
+            if (tool.options) {
+                toolOptions.classList.add('active');
+            } else {
+                toolOptions.classList.remove('active');
+            }
+        }
+
+        function handleFileUpload(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // Show file preview
+                uploadArea.style.display = 'none';
+                filePreview.classList.add('active');
+                editorContent.classList.add('active');
+                
+                // Create preview based on file type
+                if (file.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '400px';
+                    filePreview.innerHTML = '';
+                    filePreview.appendChild(img);
+                } else if (file.type === 'application/pdf') {
+                    filePreview.innerHTML = `
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">📄</div>
+                            <h3>${file.name}</h3>
+                            <p>PDF Document - ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                            <p>Preview not available in this demo</p>
+                        </div>
+                    `;
+                } else {
+                    filePreview.innerHTML = `
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">❓</div>
+                            <h3>Unsupported File Type</h3>
+                            <p>Please upload a PDF or image file</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        function applyTool() {
+            // In a real application, this would apply the selected tool to the file
+            alert('Tool applied! In a real application, this would process your file.');
+        }
+
+        // Initialize with the first tool
+        updateEditorForTool('merge-pdf');
+    </script>
+</body>
+</html>
